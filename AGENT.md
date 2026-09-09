@@ -1,6 +1,8 @@
 # Agent Instructions
 
-This repository is a personal full-stack learning plan (see [README.md](README.md)): one exercise per top-level folder, built over 3 months, culminating in an enterprise invoice management system. Development is AI-assisted. This is the owner's first project done this way, so the workflow below is deliberately explicit.
+This repository is a personal full-stack learning plan (see [docs/README.md](docs/README.md)): one exercise per top-level folder, built over 3 months, culminating in an enterprise invoice management system. Development is AI-assisted. This is the owner's first project done this way, so the workflow below is deliberately explicit.
+
+Documentation conventions (naming, structure, SSOT rules) are defined in [docs/rules.md](docs/rules.md) and [docs/structure.md](docs/structure.md) — not restated here.
 
 ## Working method: Spec-Driven Development (SDD)
 
@@ -14,7 +16,7 @@ Spec-Driven Development means the **specification is written and agreed on befor
 
 ## Repository conventions
 
-- **One exercise per folder**, at the repository root, named in kebab-case per [README.md](README.md) (e.g. `invoice-status-manager`).
+- **One exercise per folder**, at the repository root, named in kebab-case per [docs/rules.md](docs/rules.md) (e.g. `invoice-status-manager`).
 - **Numbering** in folder/README headings reflects build order (least to greatest difficulty), not priority.
 - Each exercise folder is otherwise self-contained (its own `package.json`, source, and `SPEC.md`) unless the exercise's purpose is explicitly to integrate prior exercises (e.g. `invoice-management-system`).
 
@@ -29,5 +31,5 @@ Spec-Driven Development means the **specification is written and agreed on befor
 
 ## Boundaries
 
-- `README.md` lists exercises without solutions by design — it is the assignment, not the answer key. Do not add solution content to it.
+- The curriculum (in [docs/roadmap.md](docs/roadmap.md)) lists exercises without solutions by design — it is the assignment, not the answer key. Do not add solution content to it.
 - Do not restructure or renumber exercises without confirming — the build order is intentional (fundamentals → backend → integration).
