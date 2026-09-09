@@ -20,7 +20,9 @@ React-components-test/
 │   ├── deployment.md
 │   ├── decisions.md
 │   ├── changelog.md
-│   └── roadmap.md
+│   ├── roadmap.md
+│   └── templates/               ← reusable document templates (SSOT for their shape)
+│       └── spec.template.md
 ├── <exercise-name>/              ← one per exercise, created when started
 │   ├── docs/
 │   │   ├── README.md
@@ -53,6 +55,10 @@ React-components-test/
 - Information relevant to the whole repository (terminology, conventions, cross-cutting decisions) → `docs/` at the root.
 - Information relevant to one exercise only (its own architecture, decisions, history, planned extensions) → that exercise's `docs/` folder.
 - Information relevant to running/deploying the final application → `invoice-management-system/docs/deployment.md`.
+
+## Templates
+
+`docs/templates/` holds reusable document templates — currently [spec.template.md](templates/spec.template.md), the SSOT for how every exercise's `SPEC.md` is shaped (see [../AGENT.md](../AGENT.md) step 1). Copy a template into place and fill it in; don't hand-roll a different shape per exercise. New templates are added here if a recurring document shape emerges (e.g. a shared shape for exercise `README.md` files), not invented ad hoc per exercise.
 
 ## Configuration Files
 
