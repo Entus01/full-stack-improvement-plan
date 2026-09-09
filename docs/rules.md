@@ -1,0 +1,33 @@
+# Development Principles
+
+Project-wide rules and conventions. Exercise-specific rules, if any turn out to be needed, belong inside that exercise's own `docs/` folder, not here.
+
+## Naming Conventions
+
+- All exercise and project directories use **kebab-case** (see [glossary.md](glossary.md)), e.g. `invoice-status-manager`. This is the standard npm/project-directory convention, not the BEM CSS naming convention.
+- Exercise folders are numbered in their heading/documentation (e.g. `01.`, `02.`) to reflect build order, but folder names themselves carry no numeric prefix.
+
+## Repository Organization
+
+The full directory layout is defined in [structure.md](structure.md) (SSOT) — this section is not repeated here.
+
+## Code Style
+
+Not yet defined. No linting, formatting, or code-style conventions have been established for this project. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
+
+## Git Workflow
+
+Not yet defined. No branching, commit-message, or review conventions have been established for this project. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
+
+## Documentation Standards
+
+- Documentation follows the [Repos Documentation](https://entus01.github.io/Repos-Documentation/) standard (see [decisions.md](decisions.md), DEC-001).
+- Project-wide information lives in this `docs/` folder. Exercise-specific information lives in that exercise's own `docs/` folder. Final-application information lives in its own `docs/` folder. Do not duplicate the same information across these scopes — reference the owning document instead.
+- Terminology used in any document must match [glossary.md](glossary.md); new terms requiring shared interpretation are added there, not redefined locally.
+- Exercise-level and final-application-level documentation sets are created only when that exercise/application is actually started (see [decisions.md](decisions.md), DEC-002) — not created in advance as empty placeholders.
+
+## Maintenance Guidelines
+
+- Prefer simplicity over complexity; do not create a document unless it has real, current content.
+- Keep documentation synchronized with the actual state of the project — `architecture.md` and `deployment.md` must reflect what exists, not what is planned (planned work belongs in [roadmap.md](roadmap.md)).
+- Record significant decisions in [decisions.md](decisions.md) and summarize meaningful evolution in [changelog.md](changelog.md); neither replaces git history.
