@@ -1,421 +1,309 @@
-# 3-Month Full Stack Improvement Plan
-Stack: React + JS + Node.js + Express.js + MongoDB
-Goal: Build an Enterprise-Ready Invoice Management System
+# 3-Month Full-Stack Improvement Plan
 
+**Stack:** React + Vite, Node.js + Express.js, npm, MongoDB, PostgreSQL
+**Goal:** Build an enterprise-ready invoice management system
+**Method:** AI-assisted development using Spec-Driven Development (SDD) — see [AGENT.md](AGENT.md) for the workflow.
 
-## Month 1- Fundamentals and Clean Arquitecture
+**Database split:**
+- **MongoDB** — schema-flexible, high-volume data: audit logs, notifications, activity feeds.
+- **PostgreSQL** — core relational business data: users, roles, customers, products, invoices, payments — where foreign keys and transactions matter.
+
+**Naming convention:** kebab-case directories (standard npm/project-folder convention), one exercise per folder, numbered in build order.
+
+---
+
+## Month 1 — Frontend Fundamentals & Clean Architecture
 
 ### 01. javascript-data-transformer
-- Estimated Time:
-    8-12 hours
-- Description:
-    Create a utility library that receives arrays of objects and allows filtering, sorting, grouping, searching and pagination.
-- Skills:
-    Array methods -> functions used to process collections of data.
-    Immutability -> practice modifying data without altering the original source.
-    Pure functions -> Functions that always produce the same output from the same input.
-    Functional programming -> 
-    Data transformation ->
-    Clean code ->
-    Documentation ->
+- **Estimated time:** 8–12 hours
+- **Description:** Create a utility library that receives arrays of objects and allows filtering, sorting, grouping, searching, and pagination.
+- **Skills:**
+  - Array methods — built-in JS functions (map, filter, reduce, sort, etc.) for processing collections without manual loops.
+  - Immutability — producing new data instead of mutating the original input.
+  - Pure functions — functions whose output depends only on their input, with no side effects.
+  - Functional programming — composing small, single-purpose functions into more complex behavior.
+  - Data transformation — reshaping data from one structure into another a consumer needs.
+  - Clean code — naming and structure that make intent obvious without extra comments.
+  - Documentation — describing a function's purpose, parameters, and return values for other developers.
 
 ### 02. form-validator
-- Description:
-    Build a reusable validation engine capable of validating forms through configurable rules.
-- Skills:
-    Regular expressions
-    Validation patterns
-    Error handling
-    Reusable functions
-    Separation of concerns
+- **Estimated time:** 10–14 hours
+- **Description:** Build a reusable validation engine capable of validating forms through configurable rules.
+- **Skills:**
+  - Regular expressions — pattern matching used to validate string formats (emails, phone numbers, etc.).
+  - Validation patterns — strategies for defining and applying rules consistently across different data shapes.
+  - Error handling — capturing and reporting invalid input in a predictable, structured way.
+  - Reusable functions — writing logic once and applying it across many contexts without duplication.
+  - Separation of concerns — keeping validation logic independent from UI rendering logic.
 
-### 03. local-sorage-manager
-- Estimated time:
+### 03. local-storage-manager
+- **Estimated time:** 6–10 hours
+- **Description:** Create an abstraction layer over the browser's localStorage to handle CRUD operations and data serialization.
+- **Skills:**
+  - Browser APIs — built-in browser interfaces (like localStorage) for interacting with the client environment.
+  - JSON serialization — converting JS objects to strings for storage and parsing them back.
+  - Error handling — handling storage limits, corrupted data, or unavailable storage gracefully.
+  - Abstraction — hiding implementation details behind a simple, consistent interface.
 
-- Description:
-    Create an abtraction layer over browser localStorage to handle CRUD operations and data seralization.
-- Skills
-    Browser APIs
-    JSON serialization
-    Error handling
+### 04. react-component-library
+- **Estimated time:** 14–18 hours
+- **Description:** Develop a collection of reusable UI components with a consistent API.
+- **Skills:**
+  - React fundamentals — components, JSX, and rendering behavior.
+  - Props — the mechanism for passing data and configuration into components.
+  - Component composition — building complex UI by combining smaller components.
+  - Reusability — designing components generic enough to be used in different contexts without modification.
 
-### 04. react-component library
-- Estimated time:
-
-- Description:
-    Develop a colletion of reusable UI components.
-- Skills
-    React fundamentals
-    Props
-    Component composition
-    Reusability
-
-### 5. custom-hooks-collection
-- Estimated time:
-
-- Description:
-    Build several reusable custom hooks for comon business needs.
-- Skills
-    useState
-    useEffect
-    Custom Hooks
-    State isolation
-    Reusability
+### 05. custom-hooks-collection
+- **Estimated time:** 10–14 hours
+- **Description:** Build several reusable custom hooks for common frontend business needs.
+- **Skills:**
+  - useState — React's hook for managing local component state.
+  - useEffect — React's hook for running side effects tied to a component's lifecycle.
+  - Custom hooks — extracting reusable stateful logic out of components into shared functions.
+  - State isolation — ensuring each hook instance keeps its own independent state.
+  - Reusability — writing logic once that many components can adopt.
 
 ### 06. react-form-engine
-- Estimated time:
-
-- Description:
-    Develop a dynamic form generator that render fiolds from configuration objects.
-- Skills
-    Dynamic rendering
-    Controlled inputs
-    Form management
-    Validation integration
-    Component architecture
+- **Estimated time:** 16–20 hours
+- **Description:** Develop a dynamic form generator that renders fields, layout, and validation from a configuration object.
+- **Skills:**
+  - Dynamic rendering — generating UI at runtime based on data rather than hardcoded markup.
+  - Controlled inputs — form inputs whose value is driven by React state rather than the DOM.
+  - Form management — tracking values, touched/dirty state, and submission across many fields.
+  - Validation integration — connecting a form to a validation engine (see exercise 02).
+  - Component architecture — structuring components so the system stays maintainable as it grows.
 
 ### 07. authentication-ui
-- Estimated time:
-
-- Description:
-    Create Login, Register, Forgot Password and Reset Password interfaces.
-- Skills
-    Form handling
-    Routing
-    Component design
-    Authentication workflows
-    UX patterns
+- **Estimated time:** 14–18 hours
+- **Description:** Create Login, Register, Forgot Password, and Reset Password interfaces.
+- **Skills:**
+  - Form handling — collecting, validating, and submitting user input.
+  - Routing — navigating between views in a single-page application.
+  - Component design — structuring UI pieces for clarity and reuse.
+  - Authentication workflows — the standard steps and states involved in signing up, logging in, and recovering access.
+  - UX patterns — conventions users expect from authentication flows (feedback, error states, redirects).
 
 ### 08. expense-tracker-client
-- Estimated time:
+- **Estimated time:** 20–26 hours
+- **Description:** Build a complete frontend for personal expense tracking.
+- **Skills:**
+  - CRUD UI — interfaces for creating, reading, updating, and deleting records.
+  - Filtering — narrowing displayed data based on user-selected criteria.
+  - Search — locating records matching a text query.
+  - Charts — visualizing data (e.g., spending by category) graphically.
+  - State management — coordinating shared application state across components.
+  - Pagination — splitting large data sets into navigable pages.
 
-- Description:
-    Build a complete frontend for personal expense tracking.
-- Skills
-    CRUD UI
-    Filtering
-    Search
-    Charts
-    State management
-    Pagination
+---
 
-
-## Month 2 - Backend Engineering
+## Month 2 — Backend Engineering
 
 ### 09. express-server-foundation
-- Estimated time:
-
-- Description:
-    Create a backend foundation  with modular architecture and environment configuration.
-- Skills
-    Express.js
-    Enviroment variables
-    Middleware
-    Routing
-    Folder organization
-    Configuration management
+- **Estimated time:** 8–12 hours
+- **Description:** Create a backend foundation with modular architecture and environment configuration.
+- **Skills:**
+  - Express.js — the Node.js web framework used to build HTTP APIs.
+  - Environment variables — externalizing configuration (ports, secrets, URLs) from code.
+  - Middleware — functions that run in the request/response pipeline before reaching a route handler.
+  - Routing — mapping HTTP methods and paths to handler functions.
+  - Folder organization — structuring a backend project so responsibilities are easy to locate.
+  - Configuration management — handling different settings across environments (dev, test, prod).
 
 ### 10. api-error-handler
-- Estimated time:
-
-- Description:
-    Develop a centralized error handling system.
-- Skills
-    Error management
-    Middleware
-    Loggingn
-    API standards
-    HTTP responses
+- **Estimated time:** 6–10 hours
+- **Description:** Develop a centralized error handling system.
+- **Skills:**
+  - Error management — catching and classifying errors consistently across an application.
+  - Middleware — Express's mechanism for intercepting errors before they reach the client.
+  - Logging — recording errors and relevant context for later diagnosis.
+  - API standards — conventions for consistent, predictable API responses.
+  - HTTP responses — using status codes and response bodies correctly.
 
 ### 11. jwt-auth-service
-- Estimated time:
-
-- Description:
-    Create an authorization service using JWT.
-- Skills
-    Authentication
-    Authorization
-    Token management
-    Passweord hashing
-    Security principles
+- **Estimated time:** 12–16 hours
+- **Description:** Create an authorization service using JWT.
+- **Skills:**
+  - Authentication — verifying that a user is who they claim to be.
+  - Authorization — determining what an authenticated user is allowed to do.
+  - Token management — issuing, verifying, and refreshing JWTs.
+  - Password hashing — storing passwords irreversibly using a hashing algorithm.
+  - Security principles — general practices for protecting credentials and sessions.
 
 ### 12. role-permission-system
-- Estimated time:
-
-- Description:
-    Develop a permissin engine supporting multiple user roles.
-- Skills
-    RBAC
-    Authorization
-    Middleware
-    Security Architecture
-    Database relationships
+- **Estimated time:** 14–18 hours
+- **Description:** Develop a permission engine supporting multiple user roles.
+- **Skills:**
+  - RBAC (Role-Based Access Control) — restricting actions based on a user's assigned role.
+  - Authorization — enforcing what each role is permitted to do.
+  - Middleware — intercepting requests to check permissions before they reach a handler.
+  - Security architecture — structuring a system so access rules are consistent and hard to bypass.
+  - Database relationships — modeling how roles, users, and permissions relate to each other.
 
 ### 13. mongodb-schema-design
-- Estimated time:
+- **Estimated time:** 12–16 hours
+- **Description:** Design multiple related MongoDB collections modeling a schema-flexible part of the business domain (e.g., logs or notifications).
+- **Skills:**
+  - Database design — deciding how data should be structured and related.
+  - Mongoose — the ODM (Object-Document Mapper) used to define schemas and interact with MongoDB from Node.js.
+  - Relationships — referencing or embedding related documents across collections.
+  - Validation — enforcing data shape and constraints at the schema level.
+  - Indexing — speeding up queries by indexing frequently searched fields.
 
-- Description:
-    Create multiple related collections modeling a complete business domain.
-- Skills
-    Database design
-    Mongoose
-    Relationships
-    Validation
-    Indexing
+### 14. sql-relational-modeling
+- **Estimated time:** 14–18 hours
+- **Description:** Design a normalized relational schema in PostgreSQL for entities that require strict referential integrity (e.g., users, customers, products).
+- **Skills:**
+  - Relational modeling — organizing data into tables with defined relationships (one-to-many, many-to-many).
+  - Normalization — structuring tables to reduce redundancy and inconsistency.
+  - Foreign keys — constraints that enforce valid relationships between tables.
+  - Transactions — grouping multiple operations so they succeed or fail together.
+  - Migrations — versioned, repeatable changes to a database schema over time.
+  - SQL / ORM usage — querying and mapping relational data from Node.js.
 
-### 14. file-upload-service
-- Estimated time:
+### 15. file-upload-service
+- **Estimated time:** 10–14 hours
+- **Description:** Build a service capable of uploading and managing documents.
+- **Skills:**
+  - File handling — receiving, processing, and storing uploaded files server-side.
+  - Storage architecture — deciding where and how uploaded files are kept.
+  - Security validation — checking file type, size, and content to prevent unsafe uploads.
+  - API design — exposing upload/download/delete operations through a clean interface.
 
-- Description:
-    Build a service capable of uploading and managing documents.
-- Skills
-    File handling
-    Storage architecture
-    Security validation
-    API design
+### 16. audit-log-system
+- **Estimated time:** 10–14 hours
+- **Description:** Register every important action performed by users.
+- **Skills:**
+  - Event tracking — capturing meaningful actions as discrete records.
+  - Database logging — persisting event records for later review.
+  - User activity history — reconstructing what a user did and when.
+  - Compliance concepts — why systems need traceability of who did what.
 
-### 15. audit-log-system
-- Estimated time:
+### 17. notification-service
+- **Estimated time:** 12–16 hours
+- **Description:** Create a backend notification system.
+- **Skills:**
+  - Event-driven design — triggering actions in response to events rather than direct calls.
+  - Service architecture — structuring a standalone service with a clear responsibility.
+  - Background processes — running work outside the main request/response cycle.
+  - Message management — queuing, formatting, and delivering notification content.
 
-- Description:
-    Register every important action performed by users.
-- Skills
-    Event tracking
-    Database logging
-    User activity history
-    Compliance concepts
+---
 
-### 16. notification-service
-- Estimated time:
+## Month 3 — Enterprise Application Development
 
-- Description:
-    Create a backend notification system.
-- Skills
-    Event-driven design
-    Service architecture
-    Background processes
-    Message management
+### 18. customer-management-system
+- **Estimated time:** 16–20 hours
+- **Description:** Build a complete customer administration module.
+- **Skills:**
+  - Full CRUD — create, read, update, and delete across both API and UI.
+  - Database relations — connecting customers to other entities (e.g., invoices, users).
+  - Search — finding customers matching a query.
+  - Filters — narrowing customer lists by attributes.
+  - Pagination — paging through large customer lists.
+  - Business rules — constraints specific to the domain (e.g., unique tax IDs).
 
+### 19. product-catalog-system
+- **Estimated time:** 16–20 hours
+- **Description:** Create a complete product management platform.
+- **Skills:**
+  - Inventory concepts — tracking stock, pricing, and availability.
+  - CRUD operations — managing product records end-to-end.
+  - Validation — ensuring product data meets required constraints.
+  - Search optimization — making product lookups fast and relevant.
+  - Categorization — organizing products into groups for browsing and filtering.
 
+### 20. invoice-builder-engine
+- **Estimated time:** 20–26 hours
+- **Description:** Develop an engine capable of generating invoices from customers and products, including line items and totals.
+- **Skills:**
+  - Business logic — encoding the domain rules that define a valid invoice.
+  - Calculations — computing subtotals, taxes, discounts, and totals correctly.
+  - Data relationships — linking invoices to their customers, products, and creators.
+  - Architecture design — structuring the engine so it stays testable and extensible.
 
-## Month 3 - Enterprise Application Development
+### 21. invoice-pdf-generator
+- **Estimated time:** 16–20 hours
+- **Description:** Build a service that renders an invoice into a PDF, plus a preview view showing exactly what a recipient will see when the invoice is emailed or downloaded.
+- **Skills:**
+  - PDF generation — programmatically producing PDF documents from structured data.
+  - Template design — separating an invoice's visual layout from its underlying data.
+  - Rendering consistency — ensuring the on-screen preview, the emailed copy, and the downloaded file all match.
+  - Document architecture — structuring reusable templates for different document types.
 
-### 17. customer-management-system
-- Estimated time:
+### 22. invoice-status-manager
+- **Estimated time:** 14–18 hours
+- **Description:** Implement invoice lifecycle management across its valid statuses.
+- **Skills:**
+  - State machines — modeling the valid statuses an invoice can be in and the allowed transitions between them.
+  - Status semantics — Draft, Pending, Sent, Partially Paid, Paid, Overdue, Cancelled, and what each means for the business.
+  - Business rules — enforcing which status transitions are legal and when.
 
-- Description:
-    Build a complete customer administration module.
-- Skills
-    Full CRUD
-    Database relations
-    Search
-    Filters
-    Pagination
-    Business rules
+### 23. invoice-search-engine
+- **Estimated time:** 16–20 hours
+- **Description:** Create an advanced invoice filtering and sorting system, including exporting more than one invoice at a time.
+- **Skills:**
+  - Query building — constructing database queries dynamically from user-selected criteria.
+  - Dynamic filters — combining multiple optional filters (customer, date range, product, status, amount, creator) at once.
+  - Sorting — ordering results by a chosen field, such as invoice number.
+  - Bulk operations — acting on multiple selected records at once (e.g., exporting several invoices together).
+  - Pagination — paging through large result sets.
+  - Database optimization — keeping filtered/sorted queries performant as data grows.
 
-### 18. product-catalog-system
-- Estimated time:
+### 24. payment-management-system
+- **Estimated time:** 18–22 hours
+- **Description:** Develop a payment module linked to invoices, tracking partial and full payments over time.
+- **Skills:**
+  - Financial calculations — computing amounts paid, remaining balances, and totals accurately.
+  - Transaction management — ensuring payment operations complete atomically and consistently.
+  - Validation — preventing invalid payment states (e.g., overpayment).
+  - Database consistency — keeping invoice and payment records in sync.
 
-- Description:
-    Create a complete product management platform.
-- Skills
-    Inventory concepts
-    CRUD operations
-    Validation
-    Search optimization
-    Categorization
+### 25. invoice-permission-system
+- **Estimated time:** 14–18 hours
+- **Description:** Implement invoice access control according to user role and resource ownership.
+- **Skills:**
+  - RBAC — restricting invoice actions by role (e.g., Superadmin, Administrator, Accountant, Manager, Sales Rep, Viewer).
+  - Resource ownership — restricting access further based on who created or owns a given invoice.
+  - Security — preventing unauthorized access to or modification of invoice data.
+  - Access policies — the rules that define what each role/ownership combination is allowed to do.
 
-### 19. invoice-builder-engine
-- Estimated time:
+### 26. invoice-history-tracker
+- **Estimated time:** 12–16 hours
+- **Description:** Track every modification made to an invoice over its lifetime (created, edited, sent, paid, archived, deleted, restored).
+- **Skills:**
+  - Audit trails — a chronological record of who changed what and when.
+  - Data versioning — retaining prior states of a record as it changes.
+  - Change tracking — detecting and recording differences between versions of a record.
 
-- Description:
-    Develop an engine capable of generating invoices from products and customers.
-- Skills
-    Business logic
-    Calculations
-    Data relationship
-    Architecture design
+### 27. invoice-dashboard
+- **Estimated time:** 18–22 hours
+- **Description:** Develop a business dashboard for invoice analytics.
+- **Skills:**
+  - Aggregation queries — computing summary statistics (totals, averages, counts) across many records.
+  - Reporting — presenting computed business metrics in a readable form.
+  - Dashboard design — laying out multiple metrics and charts coherently.
+  - Data visualization — representing metrics like revenue, overdue amounts, and top customers/products graphically.
 
-### 20. invoice-status-manager
-- Estimated time:
-
-- Description:
-    Implement invoice lifecycle management.
-- Skills
-    Draft
-    Pending
-    Sent
-    Partially Paid
-    Paid
-    Cancelled
-
-### 21. invoice-search-engine
-- Estimated time:
-
-- Description:
-    Create an advanced invoice filtering system.
-- Skills
-    Query building
-    Dynamic filters
-    Pagination
-    Database optimization
-- Filters
-    Customer
-    Invoice Number
-    Data RANGE
-    Product
-    Status
-    Amount
-    Creator
-
-### 22. payment-management-system (stand by, client want it manuallly handle)
-- Estimated time:
-
-- Description:
-    Develop a payment module linked to invoices.
-- Skills
-    Financial calculations
-    Transaction management
-    Validation
-    Database consistency
-- Features
-    Partial payments
-    Full payments
-    Payment history
-    Remaining balances
-
-### 23. invoice-permission-system
-- Estimated time:
-
-- Description:
-    Implement invoice access control according to user role.
-- Skills
-    RCAB
-    Resource ownership
-    Security
-    Access poicies
-- Roles
-    Superadmin*
-    Administrator
-    Accointant
-    Manager
-    Sales Rep
-    Viewer
-
-### 24. invoice-history-tracker
-- Estimated time:
-
-- Description:
-    Track every modification made to an invoice.
-- Skills
-    Audit trails
-    Data versioning
-    Change tracking
-- Record Examples
-    Created
-    Edited
-    Sent
-    Paid
-    Deleted
-    Restored
-
-### 25. invoice-dashboard
-- Estimated time:
-
-- Description:
-    Develop a business dashboard for invoice analytics.
-- Skills
-    Aggregation queries
-    Reporting
-    Dashboard design
-    Data visualization
-- Metrics
-    Total Revenue
-    Outstanding Revenue
-    Paid Revenue
-    Overdue Revenue
-    Top Customers
-    Most Sold Products
-
-### 26. invoice-management-system
-- Estimated time:
-
-- Description:
-    Build the complete application by integrationg all previous projects into an unified platform.
-- Skills
-    Software architecture
-    Feature integration
-    Security
-    Scalability
-    Maintainability
-    Testing
-    Documentation
-- Minimum Features
-    #### User Management:
-        Register
-        Login
-        Logout
-        Role Management
-    #### Customer Management:
-        Create
-        Edit
-        Delete
-        Search
-    #### Product Management:
-        Create
-        Edit
-        Delete
-        Search
-    #### Invoice Management
-        Create
-        Edit
-        Delete
-        Duplicate
-        Send
-        Archive
-    #### Invoice Status
-        Draft
-        Pending
-        Sent
-        Overdue
-        Partially Paid
-        Paid
-        Cancelled
-    #### Payment Management
-        Register Payment
-        Partial Payment
-        Full Payment
-        Payment History
-    #### Search and Filters
-        Customer
-        Product
-        Date
-        Amount
-    #### Security
-        Authentication
-        Authorization
-        Resource Ownership
-        Audit Log
-    #### Reporting
-        Revenue Reports
-        Customer Reports
-        Product Reports
-        Invoice Reports
-
-
-
-Prompt
-
-You are a full-stack web development teacher.
-
-I am going to create a folder on my personal computer, where each library inside this folder will contain a task or tool for everyday use or a good practice to improve my full-stack web development skills.
-
-The technologies in which these tasks will be developed are React, Vite, Node.js, Express.js, NPM, MongoDB, and a database (I have not yet decided whether it should be SQL or Python; help me choose which would be better).
-
-The development will be assisted by AI through a prompting engineering approach.
-
-I want you to list exercises, ordering them from least to greatest difficulty, where I can learn and/or improve the best practices of full-stack web development.
-
-I do not want information unrelated to the exercises. Each exercise must include a brief description of what should be developed, the ideal development time in hours, the skills expected to be used, as well as an explanation of those skills. No exercise should include information that provides the solution. The name of each exercise must follow international project-directory naming conventions, that is, BEM. The development of all tasks must take place over a period of 3 months.
-
-At the end of the exercises, a web application will be developed to manage a company's invoicing. Among the tasks in this program will be creating invoices, editing them, archiving them, sending them, editing them, downloading them, deleting them; it must also manage the payment status of each invoice (partially paid, fully paid, overdue, cancelled, created, sent, ETC.); be able to list and/or filter invoices by client and date, sort by invoice number, download one or multiple invoices; invoices must be viewable as PDFs when they are sent or downloaded, and a preview must also show what the user will see when they receive it by email or download it. Likewise, it must control user permissions for manipulating and viewing invoices, with their respective limitations. Finally, there must be database control and relationships between invoices, the users who create them, and the clients who own their respective invoices. I do not want information other than what was requested. Make sure to create a README.md file and an AGENT.md file based on the previously stated request.
+### 28. invoice-management-system
+- **Estimated time:** 40–60 hours
+- **Description:** Build the complete application by integrating all previous exercises into one unified invoicing platform.
+- **Skills:**
+  - Software architecture — organizing many previously separate pieces into one coherent system.
+  - Feature integration — combining independently built modules without breaking their contracts.
+  - Security — applying authentication, authorization, and audit consistently across the whole app.
+  - Scalability — designing so the system can handle growing data and usage.
+  - Maintainability — keeping a large codebase easy to understand and change.
+  - Testing — verifying the integrated system behaves correctly.
+  - Documentation — describing the finished system for future maintainers.
+- **Minimum features:**
+  - **User management:** register, login, logout, role management.
+  - **Customer management:** create, edit, delete, search.
+  - **Product management:** create, edit, delete, search.
+  - **Invoice management:** create, edit, delete, duplicate, send, archive, download (single or multiple).
+  - **Invoice status:** draft, pending, sent, overdue, partially paid, paid, cancelled.
+  - **Payment management:** register payment, partial payment, full payment, payment history.
+  - **Document preview:** PDF preview matching exactly what is emailed or downloaded.
+  - **Search and filters:** customer, product, date, amount; sort by invoice number.
+  - **Security:** authentication, authorization, resource ownership, audit log.
+  - **Reporting:** revenue, customer, product, and invoice reports.
