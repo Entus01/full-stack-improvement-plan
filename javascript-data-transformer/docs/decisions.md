@@ -133,3 +133,23 @@ Impact: Callers consuming `groupItems`'s result use `Map` methods (`.get`, `.has
 
 Related documentation: [../SPEC.md](../SPEC.md)
 
+## DEC-007
+
+Date: 2026-09-14
+Status: Accepted
+
+Title: Remove FR-2 rather than reverse DEC-002
+
+Context: Implementation surfaced that FR-2 ("the library must identify or validate the object properties required by filtering, sorting, searching, and grouping operations") directly conflicts with DEC-002 (missing/undefined properties get no special handling; property access is the caller-supplied function's responsibility). No code implements FR-2, and none can without reversing DEC-002.
+
+Options considered:
+1. Remove/reword FR-2 to match the DEC-002 behavior already in place.
+2. Implement real property-existence validation across `filterItems`, `searchItems`, `sortItems`, and `groupItems`, superseding DEC-002.
+
+Decision: Option 1.
+
+Rationale: DEC-002 was a deliberate, reasoned choice (consistent with DEC-001's function-based criteria, where the caller's function controls property access). FR-2 was carried over from an earlier draft of the SPEC and never reconciled with that later decision.
+
+Impact: FR-2 and AC-2 are struck through in `SPEC.md` rather than deleted outright, for traceability. All other acceptance criteria are met; `SPEC.md` status moved to Done.
+
+Related documentation: [../SPEC.md](../SPEC.md)
