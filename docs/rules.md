@@ -13,7 +13,9 @@ The full directory layout is defined in [structure.md](structure.md) (SSOT) — 
 
 ## Code Style
 
-Not yet defined. No linting, formatting, or code-style conventions have been established for this project. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
+- **Module system:** ESM (`import`/`export`), not CommonJS — project-wide, across both frontend and backend exercises (see [decisions.md](decisions.md), DEC-006).
+- **Testing:** Vitest — project-wide (see [decisions.md](decisions.md), DEC-007).
+- Linting/formatting conventions are not yet defined. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
 
 ## Git Workflow
 
