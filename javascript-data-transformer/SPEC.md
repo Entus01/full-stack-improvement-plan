@@ -121,16 +121,18 @@ Object shape (no fixed schema required — the library is generic) and mutation 
 
 ## Acceptance Criteria
 
-* [ ] **AC-1 (FR-1):** The library validates that the provided input is an array containing objects and handles invalid input predictably.
-* [ ] **AC-2 (FR-2):** The library can identify or validate the properties required by filtering, sorting, searching, and grouping operations.
-* [ ] **AC-3 (FR-3):** Filtering returns only the objects that satisfy the provided criteria.
-* [ ] **AC-4 (FR-4):** Sorting returns the objects ordered according to the selected property and sort order.
-* [ ] **AC-5 (FR-5):** Searching returns the objects that match the provided search criterion.
-* [ ] **AC-6 (FR-6):** Grouping organizes the objects according to the selected grouping property or criterion.
-* [ ] **AC-7 (FR-7):** Pagination returns only the objects belonging to the requested page and respects the configured page size.
-* [ ] **AC-8 (FR-8):** Each utility returns results using a predictable and consistent data structure.
-* [ ] **AC-9 (FR-9):** Invalid or unsupported inputs are handled according to the defined error-handling rules without causing unexpected runtime failures.
-* [ ] **AC-10 (FR-10):** Each utility can be used independently, and compatible utilities can be combined sequentially.
+* [x] **AC-1 (FR-1):** The library validates that the provided input is an array containing objects and handles invalid input predictably. — `validateInput.js`, `tests/validateInput.test.js`.
+* [ ] **AC-2 (FR-2):** The library can identify or validate the properties required by filtering, sorting, searching, and grouping operations. — **Not implemented; conflicts with DEC-002.** See note below.
+* [x] **AC-3 (FR-3):** Filtering returns only the objects that satisfy the provided criteria. — `filterItems.js`, `tests/filterItems.test.js`.
+* [x] **AC-4 (FR-4):** Sorting returns the objects ordered according to the selected property and sort order. — `sortItems.js`, `tests/sortItems.test.js`.
+* [x] **AC-5 (FR-5):** Searching returns the objects that match the provided search criterion. — `searchItems.js`, `tests/searchItems.test.js`.
+* [x] **AC-6 (FR-6):** Grouping organizes the objects according to the selected grouping property or criterion. — `groupItems.js`, `tests/groupItems.test.js`.
+* [x] **AC-7 (FR-7):** Pagination returns only the objects belonging to the requested page and respects the configured page size. — `paginateItems.js`, `tests/paginateItems.test.js`.
+* [x] **AC-8 (FR-8):** Each utility returns results using a predictable and consistent data structure. — every operation always returns the same kind of structure across calls (array for filter/search/sort/paginate, `Map` for group per DEC-006).
+* [x] **AC-9 (FR-9):** Invalid or unsupported inputs are handled according to the defined error-handling rules without causing unexpected runtime failures. — covered across all test files (TypeError/RangeError cases).
+* [x] **AC-10 (FR-10):** Each utility can be used independently, and compatible utilities can be combined sequentially. — `tests/index.test.js`.
+
+**Note on AC-2 / FR-2:** DEC-002 (see [docs/decisions.md](docs/decisions.md)) resolved that missing/undefined properties are *not* specially validated — the library lets native JS semantics apply and leaves property access entirely to the caller-supplied function. That decision directly conflicts with FR-2 as originally written ("must identify or validate the object properties"), which was never revised to match. No code implements FR-2. This needs a decision: either revise FR-2 to match the DEC-002 behavior (recommended, since DEC-002 was already made deliberately) or add real property validation, which would reverse DEC-002.
 
 ## Definition of Done
 
@@ -150,3 +152,4 @@ Object shape (no fixed schema required — the library is generic) and mutation 
 |---|---|---|
 | 2026-09-10 | Initial draft | — |
 | 2026-09-14 | Removed duplicated "Interface / Contract" heading; resolved all open questions (criteria format, missing-property handling, pagination edge cases, invalid-input handling, filter/search overlap) and updated the Interface/Contract section accordingly | Open questions were blocking a concrete implementation plan; resolutions logged in [docs/decisions.md](docs/decisions.md) DEC-001–DEC-005 |
+| 2026-09-14 | Implemented all five operations plus shared guards (`validateInput`, `assertFunction`); 9 of 10 acceptance criteria checked off with 46 passing tests. `groupItems`'s `Map` return type logged as DEC-006. AC-2/FR-2 found to conflict with DEC-002 and left unresolved — flagged for a decision | Implementation plan (files + order of work) confirmed and executed |
