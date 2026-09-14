@@ -1,9 +1,9 @@
-# SPEC — <form-validator>
+# SPEC — form-validator
 
 ## Metadata
 
-- Exercise: `<form-validator>` (must match the folder name, kebab-case)
-- Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. <form-validator>`
+- Exercise: `form-validator`
+- Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#02. form-validator`
 - Status: Draft
 - Created: 2026-09-14
 - Last updated: 2026-09-14
@@ -12,160 +12,192 @@
 
 ## Summary
 
-Create a form validation engine capable of reading form elements and verifying their values against the validation requirements defined for each field. The engine must evaluate whether the provided data satisfies the applicable criteria and return a validation result indicating whether the form is valid or invalid.
-
+A framework/DOM-agnostic validation engine. The caller declares each field's type and rules explicitly through a configuration (the engine never reads an HTML form or infers a field's type from its raw value). The engine validates a plain object of field values against that configuration and returns a predictable, structured result: overall form validity, and per field, its validity and every rule it failed (not just the first). Built-in rules cover common cases; a custom validator function covers anything the built-ins don't.
 
 ## Scope
 
 ### In scope
 
-* Reading and processing form field data provided to the validation engine.
-* Validating individual field values against defined validation criteria.
-* Supporting multiple validation rules for a single field.
-* Validating common field requirements such as required values, text length, numeric ranges, and format constraints.
-* Evaluating all applicable validation rules before determining the overall form result.
-* Returning a predictable validation result indicating whether the submitted form data is valid or invalid.
-* Returning information about fields that fail validation so the consuming application can identify the validation errors.
-* Supporting reusable validation rules that can be applied to different forms and fields.
-* Allowing validation rules to be combined to satisfy different form requirements.
-* Handling empty, missing, or invalid input data according to the engine's defined validation behavior.
+- Validating a plain object of field values against a caller-supplied rules configuration (no DOM/HTML form reading or element type inference).
+- Built-in field types: `text`, `textarea`, `email`, `password`, `number`, `checkbox` (boolean), `radio` (single choice from a fixed set of options), `file` (metadata only — see below).
+- Built-in rules: `required`, `minLength`, `maxLength`, `min`, `max`, `pattern` (regex), `oneOf` (allowed values), and file-specific rules (`fileType`, `maxFileSize`).
+- A `custom` validator function per field, for rules/behavior not covered by the built-ins — this is what lets the engine validate field types or constraints not explicitly enumerated here.
+- Cross-field rules — a rule that compares a field's value against another field's value (e.g. `equals` for password confirmation), evaluated with access to the full set of submitted values.
+- Validating a single field in isolation (its own rules, plus cross-field rules that reference it) and validating the entire form object at once.
+- Supporting multiple rules on the same field, and reporting every rule that fails for that field, not only the first.
+- Predictable, structured validation results: overall form validity, and per-field validity plus the list of failed rules.
+- Handling missing, empty, or `null` field values predictably per rule (see Non-Functional Requirements).
+- For `file` fields: validating already-known file metadata supplied by the caller (name, size in bytes, MIME type/extension, required, and optionally file count) — not `File`/`Blob` objects or file contents.
 
 ### Out of scope
 
-* Rendering forms or validation messages in the UI.
-* Managing React component state or form state.
-* Styling forms or validation feedback.
-* Submitting forms to a backend or external service.
-* Persisting form data or validation results in a database.
-* Authentication or authorization.
-* Business logic unrelated to field validation.
-* API integration or server-side validation.
-* File uploads or validation of file contents.
-* Internationalization or localization of validation messages.
-* Advanced asynchronous validation, such as checking a value against an external API or database.
-* Building a complete form-management framework beyond the validation responsibilities of the engine.
+- Reading or attaching to actual HTML/DOM form elements.
+- Rendering forms or validation messages in the UI.
+- Managing React component state or form state (dirty/touched tracking, submission handling).
+- Styling forms or validation feedback.
+- Submitting forms to a backend or external service.
+- Persisting form data or validation results.
+- Authentication or authorization.
+- API integration or server-side validation.
+- Uploading, storing, or reading file contents, or validating file contents beyond caller-supplied metadata — full upload handling belongs to `file-upload-service` (roadmap exercise 15).
+- Internationalization or localization of validation messages.
+- Asynchronous validation rules (e.g. checking a value against an external API) — all validation is synchronous.
+- Business logic unrelated to field validation.
+- Building a complete form-management framework beyond the validation responsibilities described here.
 
 ## Functional Requirements
 
-* **FR-1:** The validation engine must accept a form and identify the elements it contains.
-* **FR-2:** The validation engine must identify the type of each supported form element, including text inputs, text areas, email inputs, password inputs, checkboxes, radio buttons, and attachments.
-* **FR-3:** The validation engine must identify the validation constraints defined for each supported form element.
-* **FR-4:** The validation engine must support common validation constraints, including required values, length restrictions, data types, and regular expression patterns.
-* **FR-5:** The validation engine must evaluate each form element according to the constraints applicable to that element.
-* **FR-6:** The validation engine must determine whether each form element satisfies all of its applicable validation constraints.
-* **FR-7:** The validation engine must identify and report validation failures for individual form elements.
-* **FR-8:** The validation engine must evaluate the complete form based on the validation results of its elements.
-* **FR-9:** The validation engine must return a predictable result indicating whether the complete form is valid or invalid.
-* **FR-10:** The validation engine must provide sufficient validation information for the consuming application to identify which elements failed and why.
-* **FR-11:** The validation engine must handle missing, empty, or otherwise invalid values according to the constraints defined for each element.
-* **FR-12:** The validation engine must support multiple validation constraints being applied to the same form element.
-* **FR-13:** The validation engine must allow validation rules to be reused across different forms and form elements.
+- FR-1: The engine must accept a rules configuration in which the caller explicitly declares, per field, its type and the rules that apply to it — the engine does not infer a field's type from its value.
+- FR-2: The engine must support the built-in field types `text`, `textarea`, `email`, `password`, `number`, `checkbox`, `radio`, and `file`.
+- FR-3: The engine must support the built-in rules `required`, `minLength`, `maxLength`, `min`, `max`, `pattern`, and `oneOf`.
+- FR-4: The engine must support a `custom` validator function per field, so rules or field behavior not covered by FR-2/FR-3 can still be declared and validated.
+- FR-5: The engine must support cross-field rules — a rule that receives the full set of submitted values (not only its own field's value) to validate against another field.
+- FR-6: The engine must support multiple rules applying to the same field, and must evaluate all of them rather than stopping at the first failure.
+- FR-7: The engine must validate a single field in isolation, given that field's value, its own rules, and (for cross-field rules) the rest of the form's values.
+- FR-8: The engine must validate an entire form (a plain object of field values) against the full rules configuration in one call.
+- FR-9: The engine must return, for a validated field, whether it is valid and the list of every rule it failed (not just the first).
+- FR-10: The engine must return, for a validated form, overall validity plus the per-field results described in FR-9.
+- FR-11: The engine must handle missing, empty, or `null` field values predictably and consistently across rules (see Non-Functional Requirements for the specific behavior).
+- FR-12: For `file`-type fields, the engine must validate caller-supplied file metadata (name, size, type, required, and optionally file count) using the built-in rules `required`, `fileType`, and `maxFileSize`.
+- FR-13: The same rules configuration must be reusable across different forms/data objects without modification.
 
 ## Interface / Contract
 
 ### Function/API Signatures
 
-The validation engine must expose a public validation interface that accepts form data together with the form elements and their applicable validation constraints.
+**Rules configuration** — an object keyed by field name, e.g.:
 
-The input must allow the engine to identify each field, its element type, its current value, and the validation requirements that apply to it.
+```text
+{
+  password: {
+    type: "password",
+    rules: { required: true, minLength: 8 }
+  },
+  confirmPassword: {
+    type: "password",
+    rules: { required: true, equals: "password" }
+  },
+  age: {
+    type: "number",
+    rules: { required: true, min: 18 }
+  },
+  resume: {
+    type: "file",
+    rules: { required: true, fileType: ["application/pdf"], maxFileSize: 5_000_000 }
+  },
+  referralCode: {
+    type: "text",
+    rules: { custom: (value, allValues) => /* returns true, or an error message string */ }
+  }
+}
+```
 
-The validation result must indicate whether the form is valid and provide field-level validation information for elements that do not satisfy their applicable requirements.
+- `equals` is a built-in cross-field rule: its value is the name of another field whose value must match.
+- `custom` receives `(value, allValues)` and returns `true` for valid, or a string (the error message) for invalid.
 
-The validation result should distinguish between:
+**`validateField(fieldName, values, rulesConfig)`** — receives the field name, the full values object (needed for cross-field rules even when validating one field), and the rules configuration. Returns:
 
-* Overall form validity.
-* Individual field validity.
-* Validation failures and the corresponding validation criteria that were not satisfied.
+```text
+{ valid: boolean, errors: [{ rule: string, message: string }, ...] }
+```
+
+**`validateForm(values, rulesConfig)`** — receives the full values object and the rules configuration. Returns:
+
+```text
+{
+  valid: boolean,
+  fields: {
+    [fieldName]: { valid: boolean, errors: [{ rule: string, message: string }, ...] }
+  }
+}
+```
 
 ### Example
 
-**Input:**
-
-A form containing fields such as:
+**Input** (`rulesConfig`):
 
 ```text
-Name
-- type: text
-- value: "Miguel"
-- required: true
-
-Email
-- type: email
-- value: "miguel@example.com"
-- required: true
-
-Password
-- type: password
-- value: "123"
-- required: true
-- minimum length: 8
+name:     { type: "text",     rules: { required: true } }
+email:    { type: "email",    rules: { required: true } }
+password: { type: "password", rules: { required: true, minLength: 8 } }
 ```
 
-**Output:**
+**Input** (`values`):
 
 ```text
-Form: invalid
+{ name: "Miguel", email: "miguel@example.com", password: "123" }
+```
 
-Name: valid
-Email: valid
-Password: invalid
-Reason: minimum length requirement not satisfied
+**Output** (`validateForm(values, rulesConfig)`):
+
+```text
+{
+  valid: false,
+  fields: {
+    name:     { valid: true,  errors: [] },
+    email:    { valid: true,  errors: [] },
+    password: { valid: false, errors: [{ rule: "minLength", message: "..." }] }
+  }
+}
 ```
 
 ## Non-Functional Requirements
 
-* The validation engine must handle invalid, missing, or unsupported form data predictably without causing unexpected runtime failures.
-* Validation failures must provide sufficient information for the consuming application to identify the affected field and the validation requirement that was not satisfied.
-* When a form contains file attachments, the validation engine must be able to validate applicable attachment requirements, such as whether a file is required, its file type, and its permitted size, where such constraints are defined.
-* The validation engine must not upload, store, modify, or otherwise manage file contents; attachment handling beyond validation is outside the engine's responsibility.
-* The validation engine must not depend on a specific UI framework and must remain reusable independently of form presentation.
-* The implementation must follow the code quality, naming, structure, and documentation conventions defined in [docs/rules.md](../../docs/rules.md).
-* The engine should provide reasonable performance for typical form sizes and validation workloads expected in the exercises, without requiring formal performance benchmarks.
-* The implementation must not introduce external dependencies unless explicitly approved for the exercise.
-* Browser support is limited to the environment supported by the project; compatibility with legacy browsers is not required.
+- The engine must not depend on a specific UI framework or the DOM, and must remain reusable independently of form presentation.
+- The engine must handle invalid, missing, or unsupported input (rules configuration or values) predictably, without unexpected runtime failures.
+- Missing, empty-string, or `null` values: treated as "empty" uniformly for the `required` rule (all three fail `required: true`). For non-`required` fields, an empty/missing value skips the remaining rules for that field (nothing to validate) rather than failing them — except when a `custom` validator is declared, which always runs and decides for itself.
+- `checkbox` fields hold a boolean value; `required: true` on a checkbox means the value must be `true` (e.g. "I agree to terms"), not merely present.
+- `radio` fields require `oneOf` (the fixed set of valid option values) to be meaningful; the value must be a member of that set.
+- Referencing an unsupported field `type`, an unsupported rule name (outside FR-2/FR-3's built-ins and without a `custom` entry), or an `equals`/cross-field reference to a field that doesn't exist in the configuration, throws a descriptive error at validation time rather than failing silently.
+- No external dependencies, consistent with the project-wide conventions in [../docs/rules.md](../docs/rules.md).
+- The implementation follows the code quality, naming, structure, and documentation conventions in [../docs/rules.md](../docs/rules.md).
 
 ## Assumptions & Open Questions
 
-* It must be determined whether the engine receives the original HTML form and inspects its elements directly, or receives a structured representation of the form and its fields.
-* It must be determined whether validation rules are inferred from native HTML attributes, provided separately through configuration, or supported through both mechanisms.
-* The exact set of supported form element types must be finalized. The current scope includes text inputs, text areas, email inputs, password inputs, checkboxes, radio buttons, and file inputs.
-* The exact set of supported validation constraints must be finalized beyond the currently identified requirements of `required`, length restrictions, data type, and regular expressions.
-* It must be determined how validation rules should behave when multiple constraints apply to the same field.
-* It must be determined whether validation should evaluate all rules for a field or stop after the first failed rule.
-* It must be determined whether the engine should return one validation error per field or all validation errors detected for each field.
-* It must be determined how unsupported element types or validation attributes should be handled.
-* It must be determined how missing, empty, null, or otherwise invalid field values should be interpreted for each supported element type.
-* It must be determined how checkbox groups and radio groups should be validated, including what constitutes a valid selection.
-* It must be determined which file properties can be validated for attachment fields, such as required state, file type, file size, or the number of files.
-* It must be determined how validation results and error information should be structured for consumption by the application.
-* It must be determined whether validation is intended to be synchronous only or whether asynchronous validation may be supported in a future exercise.
+Resolved (see [docs/decisions.md](docs/decisions.md) once logged):
+- Declared config, not DOM/HTML form reading, and not type inference from raw values.
+- Built-in rules/types plus a `custom` escape hatch, rather than a closed enumerated list.
+- File fields validate caller-supplied metadata only, not `File` objects/content — keeps this exercise's boundary with `file-upload-service` (exercise 15) clean.
+- Cross-field validation is in scope, via a built-in `equals` rule plus general support for rules that see the full values object.
+- Synchronous validation only.
+- Per field, every failing rule is reported, not just the first.
+
+Still open — defaults proposed above in Non-Functional Requirements, need your confirmation rather than silent acceptance:
+- Whether an empty/missing value on a *non-required* field should skip its other rules (proposed) or still be evaluated against them (e.g. should a non-required field with `pattern` set reject an empty string, or let it pass since it's optional?).
+- Whether `checkbox` is exclusively a boolean toggle (proposed) — the original draft listed it as a distinct type from `radio` without defining its value shape.
+- Whether an unsupported type/rule/cross-field reference should throw (proposed, consistent with `javascript-data-transformer`'s DEC-004 fail-fast precedent) versus fail validation for just that field/rule.
 
 ## Acceptance Criteria
 
-* [ ] **AC-1 (FR-1):** The engine correctly identifies and processes all supported elements contained in the provided form.
-* [ ] **AC-2 (FR-2):** The engine correctly identifies the type of each supported form element, including text inputs, text areas, email inputs, password inputs, checkboxes, and radio buttons.
-* [ ] **AC-3 (FR-3):** The engine correctly identifies the validation constraints applicable to each supported form element.
-* [ ] **AC-4 (FR-4):** The engine correctly recognizes and evaluates the supported validation constraints, including required values, length restrictions, data types, and regular expression patterns.
-* [ ] **AC-5 (FR-5):** The engine evaluates each form element against all validation constraints applicable to that element.
-* [ ] **AC-6 (FR-6):** The engine correctly determines whether each form element satisfies its applicable validation constraints.
-* [ ] **AC-7 (FR-7):** The engine identifies fields that fail validation and provides the corresponding validation failure information.
-* [ ] **AC-8 (FR-8):** The engine evaluates the complete form based on the validation results of its individual elements.
-* [ ] **AC-9 (FR-9):** The engine returns a predictable result indicating whether the complete form is valid or invalid.
-* [ ] **AC-10 (FR-10):** The validation result provides sufficient information for the consuming application to identify each invalid element and the reason for its failure.
-* [ ] **AC-11 (FR-11):** Missing, empty, or otherwise invalid values are handled according to the applicable validation constraints.
-* [ ] **AC-12 (FR-12):** The engine correctly evaluates multiple validation constraints applied to the same form element.
-* [ ] **AC-13 (FR-13):** The same validation rules can be applied successfully to different forms or form elements without requiring form-specific implementations.
+- [ ] **AC-1 (FR-1):** Field type and rules come only from the caller-supplied configuration; the engine never infers a field's type from its value.
+- [ ] **AC-2 (FR-2):** All eight built-in field types (`text`, `textarea`, `email`, `password`, `number`, `checkbox`, `radio`, `file`) are supported.
+- [ ] **AC-3 (FR-3):** All seven built-in rules (`required`, `minLength`, `maxLength`, `min`, `max`, `pattern`, `oneOf`) are correctly evaluated.
+- [ ] **AC-4 (FR-4):** A `custom` validator function can be declared for a field and is invoked with `(value, allValues)`, its return value determining pass/fail.
+- [ ] **AC-5 (FR-5):** A cross-field rule (`equals`) correctly validates one field's value against another named field's value.
+- [ ] **AC-6 (FR-6):** A field with multiple failing rules reports all of them, not just the first.
+- [ ] **AC-7 (FR-7):** `validateField` correctly validates one field in isolation, including cross-field rules that reference other values.
+- [ ] **AC-8 (FR-8):** `validateForm` correctly validates an entire values object against the full rules configuration.
+- [ ] **AC-9 (FR-9):** A field's result reports its validity and the complete list of failed rules.
+- [ ] **AC-10 (FR-10):** A form's result reports overall validity and every field's result.
+- [ ] **AC-11 (FR-11):** Missing/empty/`null` values are handled per the Non-Functional Requirements' defined behavior, consistently across rules.
+- [ ] **AC-12 (FR-12):** `file`-type fields validate `required`, `fileType`, and `maxFileSize` against caller-supplied metadata.
+- [ ] **AC-13 (FR-13):** The same rules configuration validates multiple different values objects without modification.
 
 ## Definition of Done
 
-* All acceptance criteria above are met.
-* All supported form element types and validation constraints defined in the specification are implemented and tested.
-* Validation behavior for the resolved assumptions and open questions is implemented and documented.
-* Relevant edge cases and invalid inputs are covered by tests.
-* The validation engine can be used independently of the UI or presentation layer.
-* The exercise documentation is complete and reflects the final implementation.
-* All tests are passing.
-* No unexpected console errors or warnings are present during execution.
-* No external dependencies have been added without prior approval.
-* The implementation follows the project conventions defined in [docs/rules.md](../../docs/rules.md).
+- All acceptance criteria above are met.
+- The three still-open defaults (empty-value skip behavior, checkbox value shape, unsupported-type/rule handling) are confirmed or corrected, and this SPEC updated to match before implementation is considered final.
+- Relevant edge cases (empty/missing values, unsupported types/rules, cross-field references to a missing field) are covered by tests.
+- The engine is usable independently of any UI or presentation layer.
+- The exercise documentation is complete and reflects the final implementation.
+- All tests are passing.
+- No unexpected console errors or warnings are present during execution.
+- No external dependencies have been added.
+- The implementation follows the project conventions defined in [../docs/rules.md](../docs/rules.md).
 
+## Revision History
+
+| Date | Change | Reason |
+|---|---|---|
+| 2026-09-14 | Initial draft | — |
+| 2026-09-14 | Reconciled with prior chat decisions: declared-config model (not DOM/type-inference), added `custom` validator escape hatch, scoped file validation to metadata only, added cross-field (`equals`) rules, set report-all-failures behavior; fixed title/metadata placeholders and the AC-2/FR-2 file-type gap; rewrote Interface/Contract accordingly | Draft was written independently of the earlier scoping discussion and conflicted with several already-agreed decisions; reconciled before implementation planning |
