@@ -22,7 +22,7 @@ Total planned timeframe: 3 months. Database split: MongoDB for schema-flexible/h
   - Clean code — naming and structure that make intent obvious without extra comments.
   - Documentation — describing a function's purpose, parameters, and return values for other developers.
 
-#### 02. form-validator
+#### 02. form-validator — Status: Completed (see [Completed](#completed) below)
 - Estimated time: 10–14 hours
 - Objectives: Build a reusable validation engine capable of validating forms through configurable rules.
 - Skills:
@@ -307,6 +307,7 @@ None currently.
 ## Completed
 
 - **01. javascript-data-transformer** — all acceptance criteria met, 46 passing tests. See `javascript-data-transformer/SPEC.md` and `javascript-data-transformer/docs/`.
+- **02. form-validator** — all 13 acceptance criteria met, 50 passing tests. See `form-validator/SPEC.md` and `form-validator/docs/`.
 
 ## On Hold
 
