@@ -112,3 +112,24 @@ Impact: Two functions exist with the same signature for now; this is intentional
 
 Related documentation: [../SPEC.md](../SPEC.md)
 
+## DEC-006
+
+Date: 2026-09-14
+Status: Accepted
+
+Title: Grouping returns a `Map`, not a plain object
+
+Context: `groupItems`'s return container wasn't specified by the SPEC — only that items are "organized by the key each item maps to" (DEC-001).
+
+Options considered:
+1. Plain object (`{ [key]: items[] }`).
+2. `Map`.
+
+Decision: `Map`.
+
+Rationale: A key-selector function (per DEC-001) can return any value, not just strings — a plain object would silently coerce non-string keys (e.g. numbers, booleans) to strings, losing type information and risking collisions. `Map` also preserves key insertion order predictably and avoids prototype-related footguns plain objects have as ad hoc dictionaries.
+
+Impact: Callers consuming `groupItems`'s result use `Map` methods (`.get`, `.has`, iteration) rather than object property access.
+
+Related documentation: [../SPEC.md](../SPEC.md)
+
