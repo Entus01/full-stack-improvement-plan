@@ -4,7 +4,7 @@
 
 - Exercise: `form-validator`
 - Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#02. form-validator`
-- Status: Draft
+- Status: In Progress
 - Created: 2026-09-14
 - Last updated: 2026-09-14
 
