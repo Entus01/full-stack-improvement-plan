@@ -34,3 +34,15 @@
 ### Notes
 - `docs/roadmap.md` updated to reflect exercise 01 as Completed.
 
+## [0.3.1] - 2026-09-14
+
+### Fixed
+- `docs/templates/spec.template.md` and `javascript-data-transformer/SPEC.md` linked to `docs/` two levels up (`../../docs/...`); `SPEC.md` lives one level below root, so the correct relative path is `../docs/...`. Fixed in both; caught while reconciling `form-validator/SPEC.md`, which was written correctly from the start.
+
+## [0.4.0] - 2026-09-14
+
+### Added
+- Exercise 02, `form-validator`, completed: declared-config validation engine (ten built-in rules, `custom` escape hatch, cross-field support, file-metadata validation), 50 passing tests, full exercise-level documentation (8 decisions logged).
+
+### Notes
+- `docs/roadmap.md` updated to reflect exercise 02 as Completed.
