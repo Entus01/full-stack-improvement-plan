@@ -4,7 +4,7 @@
 
 - Exercise: `javascript-data-transformer`
 - Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. javascript-data-transformer`
-- Status: Draft
+- Status: In Progress
 - Created: 2026-09-10
 - Last updated: 2026-09-14
 
