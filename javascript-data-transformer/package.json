@@ -1,0 +1,15 @@
+{
+  "name": "javascript-data-transformer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Utility library for filtering, sorting, searching, grouping, and paginating arrays of objects.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.9"
+  }
+}
