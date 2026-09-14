@@ -15,3 +15,13 @@
 
 ### Notes
 - No exercise has been implemented yet; `docs/architecture.md` and `docs/deployment.md` are placeholders pending the first exercise or the final application.
+
+## [0.2.0] - 2026-09-14
+
+### Added
+- `docs/templates/spec.template.md` — reusable SPEC.md template, referenced from `AGENT.md`'s SDD workflow.
+- Project-wide Code Style conventions: ESM as the module system, Vitest as the test framework (see `decisions.md`, DEC-006, DEC-007).
+- Exercise 01, `javascript-data-transformer`, started: `SPEC.md` drafted and its open questions resolved, exercise-level `docs/` scaffolded.
+
+### Notes
+- `javascript-data-transformer` implementation has not started yet; its plan is pending confirmation.
