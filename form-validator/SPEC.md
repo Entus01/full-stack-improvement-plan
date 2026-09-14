@@ -162,10 +162,12 @@ Resolved (see [docs/decisions.md](docs/decisions.md) once logged):
 - Synchronous validation only.
 - Per field, every failing rule is reported, not just the first.
 
-Still open — defaults proposed above in Non-Functional Requirements, need your confirmation rather than silent acceptance:
-- Whether an empty/missing value on a *non-required* field should skip its other rules (proposed) or still be evaluated against them (e.g. should a non-required field with `pattern` set reject an empty string, or let it pass since it's optional?).
-- Whether `checkbox` is exclusively a boolean toggle (proposed) — the original draft listed it as a distinct type from `radio` without defining its value shape.
-- Whether an unsupported type/rule/cross-field reference should throw (proposed, consistent with `javascript-data-transformer`'s DEC-004 fail-fast precedent) versus fail validation for just that field/rule.
+Also resolved, confirmed 2026-09-14 (see [docs/decisions.md](docs/decisions.md) once logged):
+- Empty/missing value on a non-required field skips its other rules.
+- `checkbox` is exclusively a boolean toggle.
+- Unsupported type/rule/cross-field reference throws.
+
+None currently open.
 
 ## Acceptance Criteria
 
@@ -186,7 +188,6 @@ Still open — defaults proposed above in Non-Functional Requirements, need your
 ## Definition of Done
 
 - All acceptance criteria above are met.
-- The three still-open defaults (empty-value skip behavior, checkbox value shape, unsupported-type/rule handling) are confirmed or corrected, and this SPEC updated to match before implementation is considered final.
 - Relevant edge cases (empty/missing values, unsupported types/rules, cross-field references to a missing field) are covered by tests.
 - The engine is usable independently of any UI or presentation layer.
 - The exercise documentation is complete and reflects the final implementation.
@@ -201,3 +202,4 @@ Still open — defaults proposed above in Non-Functional Requirements, need your
 |---|---|---|
 | 2026-09-14 | Initial draft | — |
 | 2026-09-14 | Reconciled with prior chat decisions: declared-config model (not DOM/type-inference), added `custom` validator escape hatch, scoped file validation to metadata only, added cross-field (`equals`) rules, set report-all-failures behavior; fixed title/metadata placeholders and the AC-2/FR-2 file-type gap; rewrote Interface/Contract accordingly | Draft was written independently of the earlier scoping discussion and conflicted with several already-agreed decisions; reconciled before implementation planning |
+| 2026-09-14 | Confirmed remaining three proposed defaults (empty-value skip behavior, checkbox as boolean-only, unsupported type/rule throws). No open questions remain | User confirmation |
