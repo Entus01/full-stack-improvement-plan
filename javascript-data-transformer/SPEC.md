@@ -1,10 +1,10 @@
-# SPEC — javascript-data-transformer
+# SPEC — <javascript-data-transformer>
 
 ## Metadata
 
 - Exercise: `javascript-data-transformer`
 - Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. javascript-data-transformer`
-- Status: In Progress
+- Status: Done
 - Created: 2026-09-10
 - Last updated: 2026-09-14
 
@@ -43,7 +43,7 @@ Create a utility library for manipulating the contents of arrays of objects. The
 
 - FR-1: The utility library must validate that the provided input is an array containing objects before performing list operations.
 
-- FR-2: The utility library must identify or validate the object properties available for operations that require a property, such as filtering, sorting, searching, or grouping.
+- ~~FR-2: The utility library must identify or validate the object properties available for operations that require a property, such as filtering, sorting, searching, or grouping.~~ **Removed** — conflicted with DEC-002 (missing/undefined properties get no special handling; property access is the caller-supplied function's responsibility). See [docs/decisions.md](docs/decisions.md), DEC-007.
 
 - FR-3: The utility library must filter list items according to user-defined criteria.
 
@@ -119,10 +119,11 @@ None currently open. Every item originally listed here has been resolved and log
 
 Object shape (no fixed schema required — the library is generic) and mutation policy (no mutation; see this SPEC's Non-Functional Requirements) needed no separate decision record — they were already answered by the existing spec text.
 
+
 ## Acceptance Criteria
 
 * [x] **AC-1 (FR-1):** The library validates that the provided input is an array containing objects and handles invalid input predictably. — `validateInput.js`, `tests/validateInput.test.js`.
-* [ ] **AC-2 (FR-2):** The library can identify or validate the properties required by filtering, sorting, searching, and grouping operations. — **Not implemented; conflicts with DEC-002.** See note below.
+* ~~[ ] **AC-2 (FR-2)**~~ **Removed** — FR-2 was removed (DEC-007); this criterion no longer applies.
 * [x] **AC-3 (FR-3):** Filtering returns only the objects that satisfy the provided criteria. — `filterItems.js`, `tests/filterItems.test.js`.
 * [x] **AC-4 (FR-4):** Sorting returns the objects ordered according to the selected property and sort order. — `sortItems.js`, `tests/sortItems.test.js`.
 * [x] **AC-5 (FR-5):** Searching returns the objects that match the provided search criterion. — `searchItems.js`, `tests/searchItems.test.js`.
@@ -132,7 +133,6 @@ Object shape (no fixed schema required — the library is generic) and mutation 
 * [x] **AC-9 (FR-9):** Invalid or unsupported inputs are handled according to the defined error-handling rules without causing unexpected runtime failures. — covered across all test files (TypeError/RangeError cases).
 * [x] **AC-10 (FR-10):** Each utility can be used independently, and compatible utilities can be combined sequentially. — `tests/index.test.js`.
 
-**Note on AC-2 / FR-2:** DEC-002 (see [docs/decisions.md](docs/decisions.md)) resolved that missing/undefined properties are *not* specially validated — the library lets native JS semantics apply and leaves property access entirely to the caller-supplied function. That decision directly conflicts with FR-2 as originally written ("must identify or validate the object properties"), which was never revised to match. No code implements FR-2. This needs a decision: either revise FR-2 to match the DEC-002 behavior (recommended, since DEC-002 was already made deliberately) or add real property validation, which would reverse DEC-002.
 
 ## Definition of Done
 
@@ -153,3 +153,4 @@ Object shape (no fixed schema required — the library is generic) and mutation 
 | 2026-09-10 | Initial draft | — |
 | 2026-09-14 | Removed duplicated "Interface / Contract" heading; resolved all open questions (criteria format, missing-property handling, pagination edge cases, invalid-input handling, filter/search overlap) and updated the Interface/Contract section accordingly | Open questions were blocking a concrete implementation plan; resolutions logged in [docs/decisions.md](docs/decisions.md) DEC-001–DEC-005 |
 | 2026-09-14 | Implemented all five operations plus shared guards (`validateInput`, `assertFunction`); 9 of 10 acceptance criteria checked off with 46 passing tests. `groupItems`'s `Map` return type logged as DEC-006. AC-2/FR-2 found to conflict with DEC-002 and left unresolved — flagged for a decision | Implementation plan (files + order of work) confirmed and executed |
+| 2026-09-14 | Removed FR-2 and AC-2 (struck through, kept for traceability); all remaining acceptance criteria are met. Status moved to Done | FR-2 conflicted with the already-made DEC-002; resolved by dropping FR-2 rather than reversing DEC-002 — see [docs/decisions.md](docs/decisions.md), DEC-007 |
