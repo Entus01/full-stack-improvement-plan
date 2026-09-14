@@ -4,7 +4,7 @@
 
 - Exercise: `form-validator`
 - Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#02. form-validator`
-- Status: In Progress
+- Status: Done
 - Created: 2026-09-14
 - Last updated: 2026-09-14
 
@@ -171,30 +171,30 @@ None currently open.
 
 ## Acceptance Criteria
 
-- [ ] **AC-1 (FR-1):** Field type and rules come only from the caller-supplied configuration; the engine never infers a field's type from its value.
-- [ ] **AC-2 (FR-2):** All eight built-in field types (`text`, `textarea`, `email`, `password`, `number`, `checkbox`, `radio`, `file`) are supported.
-- [ ] **AC-3 (FR-3):** All seven built-in rules (`required`, `minLength`, `maxLength`, `min`, `max`, `pattern`, `oneOf`) are correctly evaluated.
-- [ ] **AC-4 (FR-4):** A `custom` validator function can be declared for a field and is invoked with `(value, allValues)`, its return value determining pass/fail.
-- [ ] **AC-5 (FR-5):** A cross-field rule (`equals`) correctly validates one field's value against another named field's value.
-- [ ] **AC-6 (FR-6):** A field with multiple failing rules reports all of them, not just the first.
-- [ ] **AC-7 (FR-7):** `validateField` correctly validates one field in isolation, including cross-field rules that reference other values.
-- [ ] **AC-8 (FR-8):** `validateForm` correctly validates an entire values object against the full rules configuration.
-- [ ] **AC-9 (FR-9):** A field's result reports its validity and the complete list of failed rules.
-- [ ] **AC-10 (FR-10):** A form's result reports overall validity and every field's result.
-- [ ] **AC-11 (FR-11):** Missing/empty/`null` values are handled per the Non-Functional Requirements' defined behavior, consistently across rules.
-- [ ] **AC-12 (FR-12):** `file`-type fields validate `required`, `fileType`, and `maxFileSize` against caller-supplied metadata.
-- [ ] **AC-13 (FR-13):** The same rules configuration validates multiple different values objects without modification.
+- [x] **AC-1 (FR-1):** Field type and rules come only from the caller-supplied configuration; the engine never infers a field's type from its value. — no inference code exists; `validateConfig.js`.
+- [x] **AC-2 (FR-2):** All eight built-in field types (`text`, `textarea`, `email`, `password`, `number`, `checkbox`, `radio`, `file`) are supported. — `rules/index.js` `SUPPORTED_TYPES`.
+- [x] **AC-3 (FR-3):** All seven built-in rules (`required`, `minLength`, `maxLength`, `min`, `max`, `pattern`, `oneOf`) are correctly evaluated. — `src/rules/*.js`, `tests/rules/*.test.js`.
+- [x] **AC-4 (FR-4):** A `custom` validator function can be declared for a field and is invoked with `(value, allValues)`, its return value determining pass/fail. — `evaluateField.js`, `tests/evaluateField.test.js`.
+- [x] **AC-5 (FR-5):** A cross-field rule (`equals`) correctly validates one field's value against another named field's value. — `rules/equals.js`, `tests/rules/equals.test.js`.
+- [x] **AC-6 (FR-6):** A field with multiple failing rules reports all of them, not just the first. — `tests/evaluateField.test.js`.
+- [x] **AC-7 (FR-7):** `validateField` correctly validates one field in isolation, including cross-field rules that reference other values. — `tests/validateField.test.js`, `tests/evaluateField.test.js`.
+- [x] **AC-8 (FR-8):** `validateForm` correctly validates an entire values object against the full rules configuration. — `tests/validateForm.test.js`.
+- [x] **AC-9 (FR-9):** A field's result reports its validity and the complete list of failed rules. — `{ valid, errors }` shape, `evaluateField.js`.
+- [x] **AC-10 (FR-10):** A form's result reports overall validity and every field's result. — `{ valid, fields }` shape, `validateForm.js`.
+- [x] **AC-11 (FR-11):** Missing/empty/`null` values are handled per the Non-Functional Requirements' defined behavior, consistently across rules. — `isEmpty.js`, `tests/evaluateField.test.js`.
+- [x] **AC-12 (FR-12):** `file`-type fields validate `required`, `fileType`, and `maxFileSize` against caller-supplied metadata. — `tests/validateForm.test.js`.
+- [x] **AC-13 (FR-13):** The same rules configuration validates multiple different values objects without modification. — `rulesConfig` is never mutated; demonstrated across all test files reusing a config with different `values`.
 
 ## Definition of Done
 
-- All acceptance criteria above are met.
-- Relevant edge cases (empty/missing values, unsupported types/rules, cross-field references to a missing field) are covered by tests.
-- The engine is usable independently of any UI or presentation layer.
-- The exercise documentation is complete and reflects the final implementation.
-- All tests are passing.
-- No unexpected console errors or warnings are present during execution.
-- No external dependencies have been added.
-- The implementation follows the project conventions defined in [../docs/rules.md](../docs/rules.md).
+- [x] All acceptance criteria above are met.
+- [x] Relevant edge cases (empty/missing values, unsupported types/rules, cross-field references to a missing field) are covered by tests.
+- [x] The engine is usable independently of any UI or presentation layer.
+- [x] The exercise documentation is complete and reflects the final implementation.
+- [x] All tests are passing — 50 tests across 16 files.
+- [x] No unexpected console errors or warnings are present during execution.
+- [x] No external dependencies have been added.
+- [x] The implementation follows the project conventions defined in [../docs/rules.md](../docs/rules.md).
 
 ## Revision History
 
@@ -203,3 +203,4 @@ None currently open.
 | 2026-09-14 | Initial draft | — |
 | 2026-09-14 | Reconciled with prior chat decisions: declared-config model (not DOM/type-inference), added `custom` validator escape hatch, scoped file validation to metadata only, added cross-field (`equals`) rules, set report-all-failures behavior; fixed title/metadata placeholders and the AC-2/FR-2 file-type gap; rewrote Interface/Contract accordingly | Draft was written independently of the earlier scoping discussion and conflicted with several already-agreed decisions; reconciled before implementation planning |
 | 2026-09-14 | Confirmed remaining three proposed defaults (empty-value skip behavior, checkbox as boolean-only, unsupported type/rule throws). No open questions remain | User confirmation |
+| 2026-09-14 | Implemented all rule evaluators, `validateConfig`, `validateField`, `validateForm`; all 13 acceptance criteria met, 50 passing tests. Status moved to Done | Implementation plan confirmed and executed |
