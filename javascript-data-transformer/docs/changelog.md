@@ -12,3 +12,15 @@
 
 ### Notes
 - No implementation exists yet. The implementation plan is the next step (see `SPEC.md` status).
+
+## [Unreleased] - 2026-09-14 (implementation)
+
+### Added
+- `validateInput`, `assertFunction` — shared internal guards.
+- `filterItems`, `searchItems`, `sortItems`, `groupItems`, `paginateItems` — the five public operations, each with its own test file.
+- `src/index.js` barrel export and `tests/index.test.js` covering combined/chained usage.
+- `package.json` with Vitest configured (ESM, per project-wide DEC-006/DEC-007). 46 tests passing across 8 files.
+- DEC-006 (`groupItems` returns `Map`, not a plain object).
+
+### Notes
+- AC-2/FR-2 ("identify or validate the properties required by operations") was found to conflict with DEC-002 (no property validation, native JS semantics apply) and was left unimplemented — see `SPEC.md` for the flagged note. `SPEC.md` status remains "In Progress" pending that decision.
