@@ -17,7 +17,7 @@ HOW TO USE THIS TEMPLATE
 ## Metadata
 
 - Exercise: `<exercise-name>` (must match the folder name, kebab-case)
-- Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. <exercise-name>`
+- Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#NN. <exercise-name>`
 - Status: Draft
 - Created: YYYY-MM-DD
 - Last updated: YYYY-MM-DD
@@ -56,7 +56,7 @@ HOW TO USE THIS TEMPLATE
 
 ## Non-Functional Requirements
 
-*Constraints beyond "it works": performance expectations, accessibility, error-handling expectations, code quality/documentation expectations, browser/environment support, etc. If nothing beyond the project-wide conventions in [docs/rules.md](../../docs/rules.md) applies, write "None beyond docs/rules.md" rather than leaving this blank.*
+*Constraints beyond "it works": performance expectations, accessibility, error-handling expectations, code quality/documentation expectations, browser/environment support, etc. If nothing beyond the project-wide conventions in [docs/rules.md](../docs/rules.md) applies, write "None beyond docs/rules.md" rather than leaving this blank.*
 
 ## Dependencies
 

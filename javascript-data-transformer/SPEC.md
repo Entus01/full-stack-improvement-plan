@@ -3,7 +3,7 @@
 ## Metadata
 
 - Exercise: `javascript-data-transformer`
-- Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. javascript-data-transformer`
+- Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#01. javascript-data-transformer`
 - Status: Done
 - Created: 2026-09-10
 - Last updated: 2026-09-14
@@ -103,7 +103,7 @@ A transformed result containing the invoice objects that satisfy the requested c
 * The utility functions must avoid mutating the original input data unless mutation is explicitly required by the operation.
 * Invalid input and unsupported criteria must be handled predictably without causing unexpected runtime failures.
 * Functions should remain reusable and independent of the UI or presentation layer.
-* The implementation should prioritize readable, maintainable, and documented code according to the project conventions defined in [docs/rules.md](../../docs/rules.md).
+* The implementation should prioritize readable, maintainable, and documented code according to the project conventions defined in [docs/rules.md](../docs/rules.md).
 * The exercise does not require specific performance targets beyond reasonable efficiency for typical list sizes used during development and testing.
 * Browser or environment support beyond the project's existing configuration is not required.
 
@@ -144,7 +144,7 @@ Object shape (no fixed schema required — the library is generic) and mutation 
 * Tests covering the defined functional requirements and relevant edge cases are passing.
 * No unexpected console errors or warnings are present during execution.
 * No external dependencies have been added.
-* The implementation follows the project conventions defined in [docs/rules.md](../../docs/rules.md).
+* The implementation follows the project conventions defined in [docs/rules.md](../docs/rules.md).
 
 ## Revision History
 
