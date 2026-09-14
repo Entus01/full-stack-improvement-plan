@@ -13,7 +13,7 @@ export function evaluateField(fieldName, values, rulesConfig) {
     if (ruleName === 'custom') continue;
     if (empty && ruleName !== 'required') continue;
 
-    const result = RULES[ruleName](ruleArg, value, values);
+    const result = RULES[ruleName](ruleArg, value, values, fieldConfig.type);
     if (result !== true) {
       errors.push({ rule: ruleName, message: result });
     }

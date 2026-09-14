@@ -18,4 +18,10 @@ describe('required', () => {
     expect(required(true, 0)).toBe(true);
     expect(required(true, false)).toBe(true);
   });
+
+  it('requires exactly true for a checkbox field (DEC-007)', () => {
+    expect(required(true, false, {}, 'checkbox')).not.toBe(true);
+    expect(required(true, undefined, {}, 'checkbox')).not.toBe(true);
+    expect(required(true, true, {}, 'checkbox')).toBe(true);
+  });
 });
