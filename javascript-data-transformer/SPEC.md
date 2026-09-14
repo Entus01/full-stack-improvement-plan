@@ -1,4 +1,4 @@
-# SPEC — <javascript-data-transformer>
+# SPEC — javascript-data-transformer
 
 ## Metadata
 
@@ -6,7 +6,7 @@
 - Roadmap entry: [docs/roadmap.md](../../docs/roadmap.md) — `#NN. javascript-data-transformer`
 - Status: Draft
 - Created: 2026-09-10
-- Last updated: 2026-09-10
+- Last updated: 2026-09-14
 
 *Status moves Draft → Approved (once the plan step in AGENT.md is confirmed) → In Progress → Done. Update "Last updated" whenever the spec itself changes.*
 
@@ -65,10 +65,6 @@ Create a utility library for manipulating the contents of arrays of objects. The
 
 ## Interface / Contract
 
-*Describe the shape of the thing being built at its boundary, without prescribing internal implementation. Adapt whichever subsections are relevant to this exercise and delete the rest.*
-
-## Interface / Contract
-
 ### Function/API Signatures
 
 The utility library must expose reusable functions for operating on arrays of objects.
@@ -77,11 +73,13 @@ Each function must receive the data it operates on and the criteria required for
 
 The library must provide functions for:
 
-* **Filtering** - receives an array of objects and filtering criteria; returns the items that match the criteria.
-* **Sorting** - receives an array of objects, a property, and a sort order; returns the items ordered according to the criteria.
-* **Searching** - receives an array of objects and a search criterion; returns the items that match the search.
-* **Grouping** - receives an array of objects and a grouping criterion; returns the items organized according to that criterion.
-* **Pagination** - receives an array of objects, a page size, and a page selection; returns the corresponding subset of items.
+* **Filtering** - receives an array of objects and a predicate function `(item) => boolean`; returns a new array containing only the items for which the predicate returns `true`.
+* **Sorting** - receives an array of objects and a comparator function `(a, b) => number`; returns a new array ordered according to the comparator (same contract as `Array.prototype.sort`).
+* **Searching** - receives an array of objects and a predicate function `(item) => boolean`; returns a new array containing only the items for which the predicate returns `true`. Currently identical in contract to Filtering, by deliberate choice — see [docs/decisions.md](docs/decisions.md), DEC-005.
+* **Grouping** - receives an array of objects and a key-selector function `(item) => key`; returns the items organized by the key each item maps to.
+* **Pagination** - receives an array of objects, a page size, and a page number; returns the corresponding subset of items. Throws a descriptive error for a non-positive or non-integer page size, or a page number beyond the available range — see [docs/decisions.md](docs/decisions.md), DEC-003.
+
+Missing or undefined properties referenced inside a predicate, comparator, or key-selector function are not specially handled by the library — native JavaScript semantics apply (see [docs/decisions.md](docs/decisions.md), DEC-002). Invalid top-level input (not an array, or containing non-object items) causes the library to throw a descriptive error rather than returning a partial or empty result (see [docs/decisions.md](docs/decisions.md), DEC-004).
 
 The functions must be usable independently and must support sequential combination where the output of one function can be used as the input of another.
 
@@ -111,15 +109,15 @@ A transformed result containing the invoice objects that satisfy the requested c
 
 ## Assumptions & Open Questions
 
-* The exact structure and required properties of the objects provided to the library have not yet been finalized.
-* The exact format of the criteria used by filtering, searching, sorting, and grouping functions has not yet been defined.
-* The expected behavior when a requested property does not exist in the provided objects must be defined.
-* The expected behavior for empty arrays must be defined for each utility operation.
-* The expected behavior when no items match the provided filtering or searching criteria must be defined.
-* The pagination behavior for invalid page numbers, page sizes, or pages beyond the available data must be defined.
-* It must be determined whether utility functions should return new data structures in every case or whether any operation is allowed to modify the input.
-* It must be determined whether the utilities are expected to support objects with inconsistent properties across items.
+None currently open. Every item originally listed here has been resolved and logged in [docs/decisions.md](docs/decisions.md):
 
+* Criteria format (predicate/comparator/key-selector functions) — DEC-001.
+* Missing/undefined property behavior, and support for objects with inconsistent properties across items — DEC-002.
+* Pagination edge cases (invalid page size/number, empty-result pages) — DEC-003.
+* Invalid top-level input handling, distinct from valid-input-no-matches — DEC-004.
+* Filtering vs. Searching remaining separate functions despite an identical current contract — DEC-005.
+
+Object shape (no fixed schema required — the library is generic) and mutation policy (no mutation; see this SPEC's Non-Functional Requirements) needed no separate decision record — they were already answered by the existing spec text.
 
 ## Acceptance Criteria
 
@@ -134,7 +132,6 @@ A transformed result containing the invoice objects that satisfy the requested c
 * [ ] **AC-9 (FR-9):** Invalid or unsupported inputs are handled according to the defined error-handling rules without causing unexpected runtime failures.
 * [ ] **AC-10 (FR-10):** Each utility can be used independently, and compatible utilities can be combined sequentially.
 
-
 ## Definition of Done
 
 * All acceptance criteria above are met.
@@ -146,3 +143,10 @@ A transformed result containing the invoice objects that satisfy the requested c
 * No unexpected console errors or warnings are present during execution.
 * No external dependencies have been added.
 * The implementation follows the project conventions defined in [docs/rules.md](../../docs/rules.md).
+
+## Revision History
+
+| Date | Change | Reason |
+|---|---|---|
+| 2026-09-10 | Initial draft | — |
+| 2026-09-14 | Removed duplicated "Interface / Contract" heading; resolved all open questions (criteria format, missing-property handling, pagination edge cases, invalid-input handling, filter/search overlap) and updated the Interface/Contract section accordingly | Open questions were blocking a concrete implementation plan; resolutions logged in [docs/decisions.md](docs/decisions.md) DEC-001–DEC-005 |
