@@ -106,3 +106,46 @@ Decision: Option 2.
 Rationale: `roadmap.md`'s own purpose ("planned initiatives," with status and objectives) is a natural fit for a not-yet-built curriculum, and this avoids introducing a new document type.
 
 Related documentation: [README.md](README.md), [roadmap.md](roadmap.md)
+
+## DEC-006
+
+Date: 2026-09-14
+Status: Accepted
+
+Title: Use ESM (import/export) as the project-wide JavaScript module system
+
+Context: The first exercise (`javascript-data-transformer`) reached its implementation-planning step and needed a module system decided. Left unresolved, this decision would otherwise be made ad hoc per exercise.
+
+Options considered:
+1. ESM (`import`/`export`, `"type": "module"`).
+2. CommonJS (`require`/`module.exports`).
+
+Decision: ESM, project-wide.
+
+Rationale: The frontend/Vite exercises later in the plan require ESM regardless; using it from exercise 01 onward keeps the module system consistent across the whole project instead of mixing conventions.
+
+Impact: `docs/rules.md` (Code Style) now records this as the project-wide convention rather than "not yet defined."
+
+Related documentation: [rules.md](rules.md)
+
+## DEC-007
+
+Date: 2026-09-14
+Status: Accepted
+
+Title: Use Vitest as the project-wide test framework
+
+Context: The Definition of Done for exercises requires passing tests, and no test framework had been chosen yet.
+
+Options considered:
+1. Node.js built-in test runner (`node:test`) — zero dependencies.
+2. Vitest — zero-config, Jest-compatible API, pairs naturally with Vite.
+3. Jest — most widely used, strongest job-relevance.
+
+Decision: Vitest, project-wide.
+
+Rationale: Reuses the same tooling across Vite-based frontend exercises and plain Node/Express backend exercises alike, avoiding a second test setup later in the plan.
+
+Impact: `docs/rules.md` (Code Style) now records this as the project-wide convention. Individual exercises' `docs/decisions.md` do not need to re-decide this.
+
+Related documentation: [rules.md](rules.md)
