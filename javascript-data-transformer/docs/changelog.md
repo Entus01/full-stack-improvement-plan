@@ -22,5 +22,8 @@
 - `package.json` with Vitest configured (ESM, per project-wide DEC-006/DEC-007). 46 tests passing across 8 files.
 - DEC-006 (`groupItems` returns `Map`, not a plain object).
 
+### Removed
+- FR-2 and AC-2, struck through (not deleted) in `SPEC.md` for traceability — conflicted with DEC-002; resolved by dropping FR-2 rather than reversing DEC-002 (DEC-007).
+
 ### Notes
-- AC-2/FR-2 ("identify or validate the properties required by operations") was found to conflict with DEC-002 (no property validation, native JS semantics apply) and was left unimplemented — see `SPEC.md` for the flagged note. `SPEC.md` status remains "In Progress" pending that decision.
+- `SPEC.md` status moved to Done — all remaining acceptance criteria are met.
