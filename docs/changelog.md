@@ -25,3 +25,12 @@
 
 ### Notes
 - `javascript-data-transformer` implementation has not started yet; its plan is pending confirmation.
+
+## [0.3.0] - 2026-09-14
+
+### Added
+- Exercise 01, `javascript-data-transformer`, completed: five operations (filter, search, sort, group, paginate) plus shared validation guards, 46 passing tests, full exercise-level documentation.
+
+### Notes
+- `docs/roadmap.md` updated to reflect exercise 01 as Completed.
+
