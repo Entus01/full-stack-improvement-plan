@@ -10,7 +10,7 @@ Total planned timeframe: 3 months. Database split: MongoDB for schema-flexible/h
 
 ### Month 1 — Frontend Fundamentals & Clean Architecture
 
-#### 01. javascript-data-transformer — Status: In Progress (see [In Progress](#in-progress) below)
+#### 01. javascript-data-transformer — Status: Completed (see [Completed](#completed) below)
 - Estimated time: 8–12 hours
 - Objectives: Create a utility library that receives arrays of objects and allows filtering, sorting, grouping, searching, and pagination.
 - Skills:
@@ -302,11 +302,11 @@ Total planned timeframe: 3 months. Database split: MongoDB for schema-flexible/h
 
 ## In Progress
 
-- **01. javascript-data-transformer** — implementation mostly complete (9/10 acceptance criteria, 46 passing tests); blocked on resolving a conflict between FR-2 and DEC-002 before it can move to Completed. See `javascript-data-transformer/SPEC.md` and `javascript-data-transformer/docs/`.
+None currently.
 
 ## Completed
 
-None yet.
+- **01. javascript-data-transformer** — all acceptance criteria met, 46 passing tests. See `javascript-data-transformer/SPEC.md` and `javascript-data-transformer/docs/`.
 
 ## On Hold
 
