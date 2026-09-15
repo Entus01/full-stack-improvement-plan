@@ -19,7 +19,12 @@ The full directory layout is defined in [structure.md](structure.md) (SSOT) — 
 
 ## Git Workflow
 
-Not yet defined. No branching, commit-message, or review conventions have been established for this project. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
+- **Commit messages** follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`, imperative mood, lowercase subject, no trailing period.
+  - Types: `feat` (new capability), `fix` (bug fix), `docs` (documentation only), `test` (tests only, no production code change), `chore` (tooling/config/dependencies), `refactor` (no behavior change).
+  - Scope: the exercise directory (e.g. `javascript-data-transformer`, `form-validator`), or omitted for root-level/project-wide changes.
+  - Body (optional): the *why*, not a restatement of the diff. Reference `DEC-XXX`/`AC-XXX`/`FR-XXX` where a commit implements or resolves one.
+- **Atomic commits:** one coherent logical change per commit — a single file's creation, a single decision's resolution, a single module with its own tests as a pair, a single bug fix. Prefer more, smaller commits over one commit bundling unrelated changes.
+- Branching strategy is not yet defined beyond direct work on `main`. This will be updated once a decision is made, and recorded in [decisions.md](decisions.md).
 
 ## Documentation Standards
 
