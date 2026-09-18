@@ -1,0 +1,16 @@
+{
+  "name": "local-storage-manager",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable browser localStorage abstraction: save/read/delete/has with JSON serialization and structured error reporting.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.0",
+    "jsdom": "^25.0.1"
+  }
+}
