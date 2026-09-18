@@ -46,3 +46,12 @@
 
 ### Notes
 - `docs/roadmap.md` updated to reflect exercise 02 as Completed.
+
+## [0.5.0] - 2026-09-18
+
+### Added
+- Exercise 03, `local-storage-manager`, completed: browser `localStorage` abstraction (`save`/`read`/`remove`/`has`, uniform structured result shape, JSON serialization, key/value/storage-failure validation), 31 passing tests, full exercise-level documentation (7 decisions logged). Reviewed via [PR #1](https://github.com/Entus01/full-stack-improvement-plan/pull/1) before implementation.
+- DEC-008: `jsdom` as the project-wide Vitest test environment for exercises depending on browser-only globals.
+
+### Notes
+- `docs/roadmap.md` updated to reflect exercise 03 as Completed.
