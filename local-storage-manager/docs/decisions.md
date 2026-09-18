@@ -99,3 +99,16 @@ Context: Collapsing create/update into `save` (DEC-001) removed the "wrong state
 Decision: Treat it as an error (`{ success: false, error: "..." }`).
 
 Related documentation: [../SPEC.md](../SPEC.md)
+
+## DEC-007
+
+Date: 2026-09-18
+Status: Accepted
+
+Title: Rename the Remove operation's function from `delete` to `remove`
+
+Context: The SPEC named this operation's function `delete` throughout (Interface/Contract, Examples, ACs). `delete` is a reserved JS keyword — `function delete(key) {}` is a syntax error, and even exported via `export { fn as delete }`, every consumer would be forced to rename it on import (`import { delete as x }`), since `delete` can't be used as a local binding either. Discovered while implementing the operation, not caught during the SPEC review.
+
+Decision: Rename to `remove` everywhere — the function itself, and all SPEC references (Interface/Contract, Examples, ACs, DoD).
+
+Related documentation: [../SPEC.md](../SPEC.md)
