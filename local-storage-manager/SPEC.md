@@ -4,7 +4,7 @@
 
 - Exercise: `local-storage-manager`
 - Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#03. local-storage-manager`
-- Status: In Progress
+- Status: Done
 - Created: 2026-09-15
 - Last updated: 2026-09-18
 
@@ -116,31 +116,31 @@ None currently open — all items below were resolved during specification revie
 
 ## Acceptance Criteria
 
-- [ ] AC-1 (FR-1): `save` creates a new entry when the key does not yet exist.
-- [ ] AC-2 (FR-1): `save` overwrites the existing entry when the key already exists, without the caller distinguishing the two cases.
-- [ ] AC-3 (FR-2): `read` retrieves the value previously stored under an existing key.
-- [ ] AC-4 (FR-2): `read` on a key with no stored data returns `{ success: true, value: null, error: null }`.
-- [ ] AC-5 (FR-3): `remove` removes the data associated with an existing key without affecting other stored entries.
-- [ ] AC-6 (FR-3): `remove` on a key with no stored data returns `{ success: false, error: "..." }`.
-- [ ] AC-7 (FR-4): Structured data (objects, arrays) round-trips through `save`/`read` without unintended data loss or alteration.
-- [ ] AC-8 (FR-5): `has` correctly reports `true` for a key with stored data and `false` for a key without it.
-- [ ] AC-9 (FR-6): `save` rejects `null` and `undefined` values with a descriptive error and does not store them.
-- [ ] AC-10 (FR-7): `save` rejects a value containing a circular reference or a `BigInt` with a descriptive error and does not store it.
-- [ ] AC-11 (FR-8): Every operation (`save`, `read`, `remove`, `has`) rejects an invalid key with a descriptive error.
-- [ ] AC-12 (FR-9): A simulated storage failure (e.g. quota exceeded, storage unavailable) is reported as `{ success: false, error: "..." }` rather than throwing or failing silently, for each of the four operations.
-- [ ] AC-13 (FR-10): Every operation's return value matches its documented result shape in both the success and failure paths.
+- [x] AC-1 (FR-1): `save` creates a new entry when the key does not yet exist. — `save.js`, `tests/save.test.js`.
+- [x] AC-2 (FR-1): `save` overwrites the existing entry when the key already exists, without the caller distinguishing the two cases. — `tests/save.test.js`.
+- [x] AC-3 (FR-2): `read` retrieves the value previously stored under an existing key. — `read.js`, `tests/read.test.js`.
+- [x] AC-4 (FR-2): `read` on a key with no stored data returns `{ success: true, value: null, error: null }`. — `tests/read.test.js`.
+- [x] AC-5 (FR-3): `remove` removes the data associated with an existing key without affecting other stored entries. — `remove.js`, `tests/remove.test.js`.
+- [x] AC-6 (FR-3): `remove` on a key with no stored data returns `{ success: false, error: "..." }`. — `tests/remove.test.js`.
+- [x] AC-7 (FR-4): Structured data (objects, arrays) round-trips through `save`/`read` without unintended data loss or alteration. — `tests/index.test.js`.
+- [x] AC-8 (FR-5): `has` correctly reports `true` for a key with stored data and `false` for a key without it. — `has.js`, `tests/has.test.js`.
+- [x] AC-9 (FR-6): `save` rejects `null` and `undefined` values with a descriptive error and does not store them. — `tests/save.test.js`.
+- [x] AC-10 (FR-7): `save` rejects a value containing a circular reference or a `BigInt` with a descriptive error and does not store it. — `tests/save.test.js`.
+- [x] AC-11 (FR-8): Every operation (`save`, `read`, `remove`, `has`) rejects an invalid key with a descriptive error. — `validateKey.js`, per-operation tests.
+- [x] AC-12 (FR-9): A simulated storage failure (e.g. quota exceeded, storage unavailable) is reported as `{ success: false, error: "..." }` rather than throwing or failing silently, for each of the four operations. — `withStorage.js`, per-operation tests mocking `Storage.prototype`.
+- [x] AC-13 (FR-10): Every operation's return value matches its documented result shape in both the success and failure paths. — `tests/index.test.js`.
 
 ## Definition of Done
 
-- All acceptance criteria above are met.
-- All four operations (`save`, `read`, `remove`, `has`) are implemented and behave consistently with the Interface / Contract, including the failure-conditions table.
-- CRUD operations do not produce unintended changes to unrelated stored data.
-- Edge cases and invalid inputs identified in the specification are handled as expected.
-- The exercise documentation is complete and reflects the final implementation.
-- Tests covering the defined functional requirements and relevant edge cases are passing.
-- No unexpected console errors or warnings are present during execution.
-- No external dependencies have been added.
-- The implementation follows the project conventions defined in [docs/rules.md](../docs/rules.md).
+- [x] All acceptance criteria above are met.
+- [x] All four operations (`save`, `read`, `remove`, `has`) are implemented and behave consistently with the Interface / Contract, including the failure-conditions table.
+- [x] CRUD operations do not produce unintended changes to unrelated stored data.
+- [x] Edge cases and invalid inputs identified in the specification are handled as expected.
+- [x] The exercise documentation is complete and reflects the final implementation.
+- [x] Tests covering the defined functional requirements and relevant edge cases are passing — 31 tests across 7 files.
+- [x] No unexpected console errors or warnings are present during execution.
+- [x] No external dependencies have been added. (`jsdom` is a devDependency for the Vitest test environment only, per project-wide DEC-008 — not a runtime dependency of the library itself, same treatment as `vitest`.)
+- [x] The implementation follows the project conventions defined in [docs/rules.md](../docs/rules.md).
 
 ## Revision History
 
@@ -149,3 +149,4 @@ None currently open — all items below were resolved during specification revie
 | 2026-09-15 | Initial draft | — |
 | 2026-09-18 | Full specification review: fixed metadata placeholders; added missing Dependencies and Revision History sections; collapsed Create/Update into a single unconditional `save`; replaced plain `boolean`/`unknown \| null` returns with a consistent `{ success, error }` (and `{ success, value, error }` / `{ success, exists, error }`) result shape across all four operations; resolved all six open questions (null handling, invalid key, unsupported value scope, storage-failure handling, delete-on-missing-key, create/update design); renumbered FRs and ACs accordingly | Specification review surfaced unresolved edge-case behavior, an internal contradiction around `null`, and structural gaps (missing sections, unverifiable ACs) that needed decisions before implementation could begin |
 | 2026-09-18 | Renamed the Remove operation's function from `delete` to `remove` throughout | `delete` is a reserved JS keyword — discovered while implementing it; not usable as a function/import binding name |
+| 2026-09-18 | Implemented all four operations plus shared guards (`validateKey`, `withStorage`); all 13 acceptance criteria met, 31 passing tests. Status moved to Done | Implementation plan confirmed and executed |
