@@ -4,7 +4,7 @@
 
 - Exercise: `local-storage-manager`
 - Roadmap entry: [docs/roadmap.md](../docs/roadmap.md) — `#03. local-storage-manager`
-- Status: Draft
+- Status: In Progress
 - Created: 2026-09-15
 - Last updated: 2026-09-18
 
