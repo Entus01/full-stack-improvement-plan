@@ -149,3 +149,24 @@ Rationale: Reuses the same tooling across Vite-based frontend exercises and plai
 Impact: `docs/rules.md` (Code Style) now records this as the project-wide convention. Individual exercises' `docs/decisions.md` do not need to re-decide this.
 
 Related documentation: [rules.md](rules.md)
+
+## DEC-008
+
+Date: 2026-09-18
+Status: Accepted
+
+Title: Use jsdom as the Vitest test environment for exercises touching browser-only APIs
+
+Context: `local-storage-manager` is the first exercise depending on a browser-only global (`localStorage`) that doesn't exist under plain Node. The same need will recur for later frontend exercises (React components, forms, auth UI).
+
+Options considered:
+1. `jsdom` as Vitest's `environment` — spec-compliant in-memory implementation, standard for testing browser APIs under Node.
+2. Node's `--experimental-webstorage` flag — no extra dependency, but file-backed (writes to a real file, needs `--localstorage-file` configured) and non-standard to set up.
+
+Decision: `jsdom`, project-wide, for any exercise whose tests need browser-only globals.
+
+Rationale: Standard, well-documented approach; makes simulating failure conditions (e.g. mocking `Storage.prototype.setItem` to test quota-exceeded handling) straightforward, which the file-backed Node flag does not support as cleanly.
+
+Impact: `docs/rules.md` (Code Style) now records this. Exercises with no browser-API dependency (e.g. `javascript-data-transformer`, `form-validator`) have no reason to add it.
+
+Related documentation: [rules.md](rules.md)

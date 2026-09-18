@@ -14,7 +14,7 @@ The full directory layout is defined in [structure.md](structure.md) (SSOT) — 
 ## Code Style
 
 - **Module system:** ESM (`import`/`export`), not CommonJS — project-wide, across both frontend and backend exercises (see [decisions.md](decisions.md), DEC-006).
-- **Testing:** Vitest — project-wide (see [decisions.md](decisions.md), DEC-007).
+- **Testing:** Vitest — project-wide (see [decisions.md](decisions.md), DEC-007). For exercises whose tests need browser-only globals (e.g. `localStorage`), use `jsdom` as the Vitest `environment` (see DEC-008).
 - Linting/formatting conventions are not yet defined. This section will be updated once those decisions are made, and recorded in [decisions.md](decisions.md).
 
 ## Git Workflow
